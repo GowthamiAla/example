@@ -1,0 +1,46 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>Drivers Details </h2>
+            <div class="widget-toolbar" role="menu">
+              <a class="btn btn-primary" routerLink="/drivers/addDriver"> Add Driver</a>
+            </div>
+          </header>
+          <div>
+
+            <div class="widget-body  ">
+              <section *ngIf="driverDeleteSuccess" style="color:#468847;text-align: center;"> {{driverDeleteSuccess}} </section>
+              <section *ngIf="driverDeleteFailure" style="color:red;text-align: center;"> {{driverDeleteFailure}} </section>
+
+              <sa-datatable [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true" width="100%">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Edit/Delete </th>
+                  </tr>
+                </thead>
+
+                <tfoot>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Edit/Delete </th>
+                  </tr>
+                </tfoot>
+              </sa-datatable>
+            </div>
+          </div>
+        </sa-widget>
+
+      </div>
+    </div>
+
+  </sa-widgets-grid>
+</div>

@@ -1,0 +1,164 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+
+        <!-- MAIN CONTENT -->
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>Add Driver</h2>
+          </header>
+          <div class="widget-body">
+            <section *ngIf="driverAddSuccess" style="color:#468847;text-align: center;"> {{driverAddSuccess}} </section>
+            <section *ngIf="driverAddFailure" style="color:red;text-align: center;"> {{driverAddFailure}} </section>
+            <br>
+            <form [formGroup]="complexForm" class="form" (ngSubmit)="submitForm(complexForm.value)" method="post">
+              <div class="row">
+                <div class="col-sm-6">
+
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group " for="driver_id" [ngClass]="{'has-error':! this.empID.valid && this.empID}"> Driver Id <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="text" class="form-control" maxlength="10" size="30" [formControl]=" this.empID" [(ngModel)]="driver.empID">
+                      <span *ngIf=" this.empID.hasError('required') &&  this.formValidate" class="text-danger ">Please Enter Driver Id</span>
+                      <span *ngIf=" this.empID.hasError('pattern') " class="text-danger">Please enter only Numbers</span>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" for="phonenumber" [ngClass]="{'has-error':! this.phoneNumber.valid &&this.formValidate}"> Phone Number <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="text" class="form-control" minlength="10" maxlength="16" size="30" [formControl]="this.phoneNumber" [(ngModel)]="driver.phoneNumber">
+                      <span *ngIf="this.phoneNumber.hasError('required') && this.formValidate" class="text-danger ">Please enter  Phone Number</span>
+                      <span *ngIf="this.phoneNumber.hasError('minlength') && !this.phoneNumber.hasError('pattern')" class="text-danger">Phone Number Should be Min 10 digits</span>
+                      <span *ngIf="this.phoneNumber.hasError('pattern')" class="text-danger">Please enter only digits</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" [ngClass]="{'has-error':! this.firstName.valid &&  this.firstName}"> First Name <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="text" class="form-control" maxlength="30" size="30" value='' [formControl]="this.firstName" [(ngModel)]="driver.firstName">
+                      <span *ngIf=" this.firstName.hasError('required') &&  this.formValidate" class="text-danger ">Please Enter First Name</span>
+                      <span *ngIf=" this.firstName.hasError('pattern') " class="text-danger">Please enter only alphabets</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label" [ngClass]="{'has-error':!this.email.valid &&this.email}">
+                                                        Email <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="email" class="form-control form-group" id="email" name="email" size="30" value='' [formControl]="this.email"
+                        [(ngModel)]="driver.email">
+                      <span *ngIf=" this.email.hasError('required') &&  this.formValidate" class="text-danger ">Please enter Primary Email</span>
+                      <span *ngIf=" this.email.hasError('pattern') " class="text-danger">Please enter a valid email address</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" for="middleName"> Middle Name </label>
+                    <div class="controls col-sm-6">
+                      <input type="text" class="form-control" id="middleName" maxlength="30" size="30" value='' [formControl]="this.middleName"
+                        name="middleName" [(ngModel)]="driver.middleName">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" for="password" [ngClass]="{'has-error':!this.passWord.valid &&  this.formValidate}"> Password <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="password" class="form-control" size="30" [formControl]="this.passWord" [(ngModel)]="driver.passWord" name="password">
+                      <span *ngIf=" this.passWord.hasError('required') &&  this.formValidate" class="text-danger ">Please enter password</span>
+                      <span *ngIf=" this.passWord.hasError('minlength') && this.passWord.hasError('pattern') " class="text-danger">Please enter at least 6 characters</span>
+                      <span *ngIf=" this.passWord.hasError('pattern')&& !this.passWord.hasError('minlength') " class="text-danger">Password between 6 to 32 character Must Contain atleast One Digit,One Lower case letter	One Upper case letter</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" [ngClass]="{'has-error':!this.lastName.valid &&  this.formValidate}" for="lname"> Last Name <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="text" class="form-control" maxlength="30" size="30" [formControl]="this.lastName" [(ngModel)]="driver.lastName"
+                        name="lastName">
+                      <span *ngIf=" this.lastName.hasError('required') &&  this.formValidate" class="text-danger ">Please Enter Last Name</span>
+                      <span *ngIf=" this.lastName.hasError('pattern') " class="text-danger">Please enter only alphabets</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" [ngClass]="{'has-error':!this.confirmPassword.valid &&  this.formValidate}"
+                      for="confirmPassword"> Confirm Password
+                                                        <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="password" class="form-control" size="30" [formControl]="this.confirmPassword" [(ngModel)]="driver.confirmPassword"
+                        name="confirmPassword" (ngModelChange)="onchange(driver.confirmPassword)">
+                      <span *ngIf="driver.confirmPassword">
+                                                          <span *ngIf="driver.confirmPassword.length!='' " class="text-danger">
+                                                            <span *ngIf="driver.confirmPassword !== driver.passWord" class="text-danger">Should be same as Password</span>
+                      </span>
+                      </span>
+                      <span *ngIf=" this.confirmPassword.hasError('required') &&  this.formValidate" class="text-danger ">Please Enter Confirm Password</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label " for="bDate"> DOB <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <my-date-picker [options]="myDatePickerOptions" [selDate]="selectedDate" [placeholder]="placeholder" [(ngModel)]="driver.selectedDate"
+                        name="mydate" (dateChanged)="onDateChanged($event)" [ngModelOptions]="{standalone: true}" required></my-date-picker>
+                      <span *ngIf="this.formValidate && driver.selectedDate.date.year === undefined " class="text-danger ">Please Enter Date Of Birth</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="hr-line-dashed"></div>
+              <div class="row">
+                <div class="control-group col-sm-6 col-sm-offset-6">
+
+                  <button type="button" id="driver_submit" class="btn  btn-success  " (click)="submitForm()">
+                                                    <i class="fa fa-save"></i> Save
+                                                </button>
+                  <button type="button" class="btn  btn-warning" (click)="goBack()">Cancel</button>
+
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </sa-widget>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>

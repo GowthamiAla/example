@@ -1,0 +1,58 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData" id="content">
+	<!--<a routerLink="/admin/template/add"><button class="btn btn-sm btn-success" type="button" style="margin-left: 1060px;">
+                     Add Template
+                  </button></a>
+	<br/> <br/>-->
+	<div class="row">
+		<div class="col-sm-12">
+			<sa-widgets-grid>
+
+
+				<sa-widget [editbutton]="false" color="blueDark">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+						<h2>Template Details</h2>
+						
+							<div *ngIf="templateWidget" class="widget-toolbar" role="menu">
+								<a class="btn btn-primary" routerLink="/admin/template/add"> Add Template</a>
+							</div>
+					</header>
+					<div>
+						<div class="widget-body no-padding ">
+
+							<section *ngIf="errorMessage" class="icon-color-bad text-center"> {{errorMessage}} </section>
+							<section *ngIf="sucessMessage" class="text-success text-center"> {{sucessMessage}} </section>
+
+							<section *ngIf="TemplateUpdateMessages" class="text-success text-center"> {{TemplateUpdateMessages}} </section>
+							<sa-datatable id="DataTable" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true"
+								tableClass="table table-striped table-bordered table-hover" width="100%">
+								<thead>
+									<tr>
+										<th>Template ID</th>
+										<th>Template Name</th>
+										<th>Template Type</th>
+
+										<th>Edit/Delete </th>
+									</tr>
+								</thead>
+
+								<tfoot>
+									<tr>
+										<th>Template ID</th>
+										<th>Template Name</th>
+										<th>Template Type</th>
+
+										<th>Edit/Delete </th>
+									</tr>
+								</tfoot>
+							</sa-datatable>
+
+						</div>
+					</div>
+				</sa-widget>
+
+			</sa-widgets-grid>
+		</div>
+	</div>
+</div>

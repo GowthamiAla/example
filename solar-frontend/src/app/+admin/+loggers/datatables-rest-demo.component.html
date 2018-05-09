@@ -1,0 +1,46 @@
+<sa-widget [editbutton]="false" color="blueDark">
+	<header>
+		<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+		<h2>Loggers Details </h2>
+	</header>
+	<div>
+		<div class="widget-body no-padding">
+			<sa-datatable  id="example" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true" tableClass="table table-striped table-bordered table-hover"
+				width="100%">
+				<thead>
+					<tr>
+						<th [style.width]="'8%'" data-hide="mobile-p">Logger Name</th>
+						<th [style.width]="'8%'" data-hide="mobile-p">Configured Level</th>
+						<th [style.width]="'8%'" data-hide="mobile-p">Effective Level</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Logger Name</th>
+						<th>Configured Level</th>
+						<th>Effective Level</th>
+					</tr>
+				</tfoot>
+			</sa-datatable>
+
+		</div>
+	</div>
+</sa-widget>
+
+<section *ngIf="loggerMessage.loggerName!=''">
+	<label class="input">
+    <input type="text" [(ngModel)]="loggerMessage.loggerName" name="loggerName" #name="ngModel">
+   </label>
+	<label class="input">
+    <input type="text" [(ngModel)]="loggerMessage.configuredLevel" name="configuredLevel" #name="ngModel">
+   </label>
+	<label>      
+		<select [(ngModel)]="loggerMessage.effectiveLevel">
+		<option *ngFor="let x of loggerLevels" [value]="x" [selected]="loggerMessage.effectiveLevel == x">{{x}}</option>
+		</select>
+    </label>
+	<label>
+ 	 <a class="btn btn-primary btn-xs"(click)="updateLoggerEffectiveLevell(loggerMessage)">Save</a>
+   </label>
+
+</section>

@@ -1,0 +1,164 @@
+<div class="content-top clearfix">
+	<h1 class="al-title">{{ activePageTitle }}</h1>
+	<ul class="breadcrumb al-breadcrumb">
+		<li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+		<li class="breadcrumb-item active">{{ activePageTitle }}</li>
+	</ul>
+</div>
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div id="dashboard-page" class="page">
+            <div class="wrapper wrapper-content">
+                <div class="row" *ngIf="dashboardAnalytics">
+                    <div class="col-lg-3">
+                        <div class="animated fadeIn card">
+                            <div class="card-header" id="driverCount">
+                                <h5>DRIVERS</h5>
+                            </div>
+                            <div class="card-body" id="driverCount">
+                                <div>
+                                    <h1 class="no-margins" id='totalDrivers'>{{dashboardAnalytics.totalDrivers}}</h1>
+                                    <small>Total Drivers</small>
+                                </div>
+                                <div id='driverCount_icon'>
+                                    <i class="fa fa-users fa-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="animated fadeIn card">
+                            <div class="card-header" id="dealerCount">
+                                <h5>DEALERS</h5>
+                            </div>
+                            <div class="card-body" id="dealerCount">
+                                <div>
+                                    <h1 class="no-margins" id='totalDealers'>{{dashboardAnalytics.totalDealers}}</h1>
+                                    <small>Total Dealers</small>
+                                </div>
+                                <div id="dealerCount_icon">
+                                    <img src="../../../../assets/img/app/map/dealer.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="animated fadeIn card">
+                            <div class="card-header" id="vinCount">
+                                <h5>CARS</h5>
+                            </div>
+                            <div class="card-body" id="vinCount">
+                                <div>
+                                    <h1 class="no-margins" id='totalVins'>{{dashboardAnalytics.totalVins}}</h1>
+                                    <small>Total Cars Delivered</small>
+                                </div>
+                                <div id="vinCount_icon">
+                                    <i class="fa fa-car fa-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="animated fadeIn card">
+                            <div class="card-header" id="notificationCount">
+                                <h5>NOTIFICATIONS</h5>
+                            </div>
+                            <div class="card-body" id="notificationCount">
+                                <div>
+                                    <h1 class="no-margins" id='totalNotifications'>{{dashboardAnalytics.geofenceNotifications}}</h1>
+                                    <small>All Notifications</small>
+                                </div>
+                                <div id="notificationCount_icon">
+                                    <i class="fa fa-bell fa-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="animated fadeIn card">
+                            <div class="card-header">
+                                <h5>Cars Delivered</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div id="monthly-bubble-chart" class="dc-chart">
+                                        <a class="reset" style="display: none;">reset</a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="animated fadeIn card ">
+                            <div class="card-header">
+                                <h5>Driver Current Locations</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div><button class="map_reset" style="display: none;">reset</button></div>
+                                    <div class="map" id="driver_map">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="animated fadeIn card">
+                            <div class="card-header">
+                                <h5>Damaged Cars</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div id="damaged-chart">
+                                        <a class="reset" style="display: none;">reset</a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="animated fadeIn card">
+                            <div class="card-header">
+                                <h5>Driver Efficiency</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div id="driver-efficiency-chart">
+                                        <a class="reset" style="display: none;">reset</a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="animated fadeIn card ">
+                            <div class="card-header">
+                                <h5>Dealers</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div id="total-dealers-chart">
+                                        <a class="reset" style="display: none;">reset</a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

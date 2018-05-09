@@ -1,0 +1,166 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData" id="content">
+	<sa-widgets-grid>
+		<div class="row">
+			<div class="col-sm-12">
+				<sa-widget [editbutton]="false" color="blueDark">
+					<header>
+						<span class="widget-icon">
+							<i class="fa fa-table"></i>
+						</span>
+						<h2>Live Tracking - Driver Current Locations </h2>
+					</header>
+
+
+
+					<div class="widget-body-toolbar markers" style="padding-left:8%">
+						<div class="row">
+							<div class="col-sm-4 col-xs-6">
+								<div class="highPriorityLoadMarker"></div>&nbsp;
+								<input type="checkbox" id="chkHighPriorityLoad" [(ngModel)]="highprioritySelected" (change)="LoadFilter(highprioritySelected,1)">
+								<label for="chkHighPriorityLoad">{{highprioritySelected?'✔ High Priority Load':'X High Priority Load'}}</label>
+							</div>
+							<div class="col-sm-4 col-xs-6">
+								<div class="highValueLoadMarker"></div>&nbsp;
+								<input type="checkbox" id="chkHighValueLoad" [(ngModel)]="highvalueSelected" (change)="LoadFilter(highvalueSelected,2)">
+								<label for="chkHighValueLoad">{{highvalueSelected?'✔ High Value Load':'X High Value Load'}}</label>
+							</div>
+							<div class="col-sm-4 col-xs-6">
+								<div class="normalLoadMarker"></div>&nbsp;
+								<input type="checkbox" id="chkNormalLoad" [(ngModel)]="normalloadSelected" (change)="LoadFilter(normalloadSelected,3)">
+								<label for="chkNormalLoad">{{normalloadSelected?'✔ Normal Load':'X Normal Load'}}</label>
+							</div>
+						</div>
+					</div>
+
+					<div>
+						<div class="widget-body no-padding ">
+							<div class="map" id="map">
+							</div>
+						</div>
+					</div>
+				</sa-widget>
+			</div>
+		</div>
+
+
+
+		<!--popup-->
+		<div bsModal #loadviewPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		    aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" (click)="loadviewPopup.hide()" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Load Details</h4>
+					</div>
+					<div class="modal-body" *ngIf="loadViewData">
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>Load Number </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class="col-xs-6 col-sm-5">
+										{{loadViewData?.apptNbr}}
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>Pickup Location </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class=" col-xs-6 col-sm-5">
+										{{loadViewData?.originLocNbr.locAddrName}}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>Destination Location </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class="col-xs-6 col-sm-5">
+										{{loadViewData?.destLocNbr.locAddrName}}
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>Driver Name </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class=" col-xs-6 col-sm-5">
+										{{loadViewData?.driver.firstName}}
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>Vendor Name </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class="col-xs-6 col-sm-5">
+										{{loadViewData?.vndNbr.vendorName}}
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>High Value </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class=" col-xs-6 col-sm-5">
+										<label>
+											<input type="checkbox" [(ngModel)]="loadViewData.highValueLoad" onclick="return false;" />
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 padding-10">
+								<div class="row">
+									<div class=" col-xs-5 col-sm-5">
+										<b>High Priority </b>
+									</div>
+									<div class="col-xs-1 col-sm-1">:</div>
+									<div class="col-xs-6 col-sm-5">
+										<label>
+											<input type="checkbox" [(ngModel)]="loadViewData.highPriorityLoad" onclick="return false;" />
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" (click)="loadviewPopup.hide()">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</sa-widgets-grid>
+</div>

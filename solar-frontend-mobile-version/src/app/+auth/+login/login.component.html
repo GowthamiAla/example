@@ -1,0 +1,81 @@
+<header id="header" class="animated fadeInDown">
+
+  <p class="logoBox">
+    <img alt="Solar" class="logoImage" src="assets/img/solar.png"><span class="logoName">Solar</span>
+  </p>
+
+  <!--<span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/register"
+    class="btn btn-danger">Create account</a> </span>-->
+
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+
+  <div id="content" class="container">
+    <div class="row">
+
+      <div class="col-md-6 col-md-offset-2 ">
+        <div class="well no-padding">
+          <form [formGroup]="complexForm" method="post" *ngIf="userLogin" class="smart-form client-form">
+            <header>
+              Sign In
+            </header>
+            <fieldset>
+               <section *ngIf="otpNotification" style="color:#468847;text-align: center;"> {{otpNotification}} </section>
+              <section *ngIf="loginErrorMessgae" style="color: red;"> {{loginErrorMessgae}} </section>
+              <section>
+                <label class="label" for="email" [ngClass]="{'has-error':! this.email.valid &&  this.email}">Email</label>
+
+                <div class="form-group form-control  input">
+                  <label class="input"> <i class="icon-append fa fa-user"></i>
+                    <input  type="email" name="email"  [formControl]="this.email" [(ngModel)]="userLogin.username" placeholder="Email" />
+
+                    <span *ngIf=" this.email.hasError('required') &&submitted  " class=" text-danger ">Please Enter email</span>
+
+                     <span *ngIf=" this.email.hasError('pattern') " class=" text-danger ">Please Enter valid email</span>
+
+                    </label>
+                </div>
+              </section>
+
+              <section>
+                <label class="label" for="password" [ngClass]="{'has-error':! this.password.valid &&  this.password}">Password</label>
+
+                <div class="form-group form-control  input">
+                  <label class="input"> <i class="icon-append fa fa-lock"></i>
+                    <input  type="password" name="password"  [formControl]="this.password" [(ngModel)]="userLogin.password" placeholder="Password" />
+
+                      <span *ngIf=" this.password.hasError('pattern') " class=" text-danger ">Please Enter atleast one number, one small letter, one capital letter and one special character for password</span>
+
+                    <span *ngIf=" this.password.hasError('required')  && submitted" class=" text-danger ">Please Enter Password</span>
+                </label>
+                </div>
+              </section>
+
+              <br>
+
+
+              <div class="row show-grid">
+                <div class="col-xs-1 "> </div>
+                <div class="col-xs-4 "> <a routerLink="/register"><u>Create account</u></a></div>
+                <div class="col-xs-4"> <a routerLink="/forgot-password"><u>Forgot password?</u></a></div>
+              </div>
+              <br>
+
+            </fieldset>
+            <footer>
+              <button type='submit' [disabled]="!complexForm.valid" (click)="userAuthentication($event)" class="btn btn-primary">
+                  Sign in
+                  <i class="fa fa-cog fa-spin" *ngIf="loading"></i>
+                  <span *ngIf="loading">loading...</span>
+              </button>         
+  
+
+            </footer>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

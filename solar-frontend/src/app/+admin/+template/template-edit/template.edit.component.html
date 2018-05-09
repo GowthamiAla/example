@@ -1,0 +1,78 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>Edit Template</h2>
+          </header>
+
+          <div class="widget-body">
+            <section *ngIf="templateUpdateSuccess" style="color:#468847;text-align: center;"> {{templateUpdateSuccess}} </section>
+            <section *ngIf="templateUpdateFailure" style="color:red;text-align: center;"> {{templateUpdateFailure}} </section>
+            <br>
+
+            <form [formGroup]="templateForm" method="post" *ngIf="template" id="checkout-form" class="smart-form">
+              <fieldset>
+
+                <div class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="tname">Template Name</label>
+                  </section>
+                  <section class="col col-4">
+                    <label class="input form-control">
+                      <input type="text" name="name" class="form-control"    formControlName="tname"  [(ngModel)]="template.name" placeholder="Template Name">
+                      <span *ngIf="templateForm.controls['tname'].hasError('pattern')||templateForm.controls['tname'].hasError('minlength') ||templateForm.controls['tname'].hasError('maxlength') " class="text-danger">Please Enter only Alphabets between 5 and 25 Characters</span>
+                    </label>
+                  </section>
+                </div>
+                <br>
+
+                <div class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="ttype">Template Type</label>
+                  </section>
+                  <section class="col col-4">
+                    <label class="input form-control">
+                    <select name="roles" class="form-control"  #select  [(ngModel)]="template.type" (ngModelChange)="onTemplateTypeChange(select.value)" formControlName="ttype"  placeholder="Template Type" required>
+                      <option value="EMAIL">EMAIL</option>
+                      <option value="SMS" >SMS</option>	
+                      <option value="WEBSOCKET" >WEBSOCKET</option>		
+                    </select>
+                    </label>
+                  </section>
+                </div>
+                <ul>
+                  <li style="color:#b94a48;font-size: 11px;"><strong>Send & Websocket send OTP Format:</strong>{{otpTextFormat}}</li>
+                  <li style="color:#b94a48;font-size: 11px;"><strong>Add user & Websocket Add user Format:</strong>{{addUserTextFormat}}</li>
+                  <li style="color:#b94a48;font-size: 11px;"><strong>Delete User & Websocket Delete user Format:</strong>{{deletUserTextFormat}}</li>
+                  <li style="color:#b94a48;font-size: 11px;"><strong>Send Error & Websocket Send error Format:</strong>{{sendErrorTextFormat}}</li>
+                </ul>
+                <br/><br/>
+                <div class="widget-body no-padding">
+
+                  <div class="customTemplateEditorEnhancement"> <textarea class="summernote" id="customSummernotes" [customSummernotes]="{height: 180 }">{{template.content}}</textarea></div>
+
+                </div>
+              </fieldset>
+
+              <span *ngIf="templateContentStatus" class="text-danger"> Template content can't be empty</span>
+              <footer>
+                <button class="btn btn-success" type="submit" [disabled]="!templateForm.valid" (click)="updateTemplate()">Update</button>
+                <button class="btn btn-warning" (click)="goBack()" type="button">Cancel</button>
+              </footer>
+              <!--<footer>
+            <section class="col col-6">
+              <button type="submit" [disabled]="!templateForm.valid" (click)="updateTemplate()" class="btn btn-primary">
+          Update
+        </button>
+            </section>
+          </footer>-->
+            </form>
+          </div>
+        </sa-widget>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>

@@ -1,0 +1,43 @@
+<!--<span id="activity" class="activity-dropdown" (click)="onToggle()">
+  <i class="fa fa-user"></i>
+  <b class="badge bg-color-red">{{count}}</b>
+</span>-->
+<div id="activity" (click)="onToggle()" class="btn-header activity-dropdown transparent pull-right">
+  <span> <a  title="Notification" style="min-width:50px" ><i class="fa  fa-bell"></i></a> </span>
+</div>
+
+<div class="ajax-dropdown notificationDropDown" #dropdown>
+  <div *ngIf="!noNotifications" class="btn-group btn-group-justified" data-toggle="buttons">
+    <label [ngClass]="{'btn btn-default': true,active: activity==currentActivityHeader }" *ngFor="let activity of activitiesHeaders"
+      (click)="setActivity(activity.data)">
+      <input type="radio" name="activity"/>
+      {{activity.data}} ({{activity.count}})
+    </label>
+  </div>
+
+  <!-- notification content -->
+  <div class="ajax-notifications custom-scroll">
+
+    <ul *ngIf="noNotifications" class="notification-body">
+      <li class="padding-5">There are no notification events for user</li>
+    </ul>
+
+    <ul class="notification-body">
+
+      <ng-template ngFor let-item *ngIf="this.currentActivityHeader=='notifications'" [ngForOf]="currentActivity">
+        <li activitiesMessage [item]="item"></li>
+      </ng-template>
+    </ul>
+
+  </div>
+  <!-- end notification content -->
+  <span>
+  <a  *ngIf="!noNotifications" (click)="notificationsList()"><i class="fa fa-list"></i>  All Notifications </a>
+ <button type="button" (click)="update()" class="btn btn-xs btn-default pull-right">
+        <i class="fa fa-cog" *ngIf="!loading"></i>
+        <i class="fa fa-cog fa-spin" *ngIf="loading"></i>
+        <span *ngIf="loading">loading...</span>
+  </button>
+  </span>
+  <!-- end footer -->
+</div>

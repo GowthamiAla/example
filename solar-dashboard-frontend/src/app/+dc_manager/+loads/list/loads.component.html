@@ -1,0 +1,307 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData" id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Loads Details </h2>
+
+          </header>
+          <div>
+
+            <div class="widget-body  ">
+
+
+              <section *ngIf="loadDeleteSuccess" class="text-success text-center"> {{loadDeleteSuccess}} </section>
+              <section *ngIf="loadDeleteFailure" class="icon-color-bad text-center"> {{loadDeleteFailure}} </section>
+
+              <sa-datatable id="DataTable" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true"
+                width="100%">
+                <thead>
+                  <tr>
+                    <th>Load Number</th>
+                    <th>Destination</th>
+                    <th>Driver </th>
+                    <th>Vendor Name</th>
+                    <th>Load Status</th>
+                    <th> View/ Notify</th>
+                  </tr>
+                </thead>
+
+                <tfoot>
+                  <tr>
+                    <th>Load Number</th>
+                    <th>Destination</th>
+                    <th>Driver </th>
+                    <th>Vendor Name</th>
+                    <th>Load Status</th>
+                    <th> View/ Notify </th>
+                  </tr>
+                </tfoot>
+              </sa-datatable>
+            </div>
+          </div>
+
+        </sa-widget>
+
+      </div>
+    </div>
+
+  </sa-widgets-grid>
+</div>
+
+<div bsModal #loadviewPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngIf="loadListView">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="loadviewPopup.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">View Load</h4>
+      </div>
+      <div class="modal-body ">
+        <section *ngIf="geoMIlesUpdated" class="text-success text-center"> {{geoMIlesUpdated}} </section>
+        <section *ngIf="geoMilesFailure" class="icon-color-bad text-center"> {{geoMilesFailure}} </section>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5">
+                <b>Load Number </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                {{loadListView?.apptNbr}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5">
+                <b>Pickup Location </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class=" col-xs-6 col-sm-5">
+                {{loadListView?.originLocNbr.locAddrName}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5">
+                <b>Destination Location </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                {{loadListView?.destLocNbr.locAddrName}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5">
+                <b>Driver Name </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                {{loadListView?.driver.firstName}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5">
+                <b> Driver Phone </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                {{loadListView?.driver.phoneNumber}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5">
+                <b>Vendor Name</b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                {{loadListView?.vndNbr.vendorName}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5">
+                <b>High Value </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                <label>
+                  <input type="checkbox" [(ngModel)]="loadListView.highValueLoad" onclick="return false;" />
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xs-12 col-sm-6 padding-10">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5">
+                <b>High Priority</b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-5">
+                <label>
+                  <input type="checkbox" [(ngModel)]="loadListView.highPriorityLoad" onclick="return false;" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="row">
+          <div class="col-xs-12 col-sm-12 padding-5">
+            <div class="row">
+              <div class="col-xs-5 ">
+                <b>Email Participants  </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-9">
+               {{emailList|json}}
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+        <form [formGroup]="complexForm" class="form" method="post">
+          <!--<div class="row">
+            <div class="col-xs-12 col-sm-6 padding-10 geofieldInput">
+              <div class="row padding-5">
+                <div class="col-xs-5 col-sm-5">
+                  <b>Add Email Participants<font class="icon-color-bad">*</font> </b>
+                </div>
+                <div class="col-xs-1 col-sm-1">:</div>
+                <div class="col-xs-6 col-sm-5 no-padding">
+                  <input type="email" class="form-control" [formControl]="this.geofenceEmail" name="geofenceEmail" [(ngModel)]="geoEmail">
+                  <span *ngIf=" this.geofenceEmail.hasError('required') &&  this.formValidate" class="icon-color-bad ">Please enter geofence miles </span>
+                  <span *ngIf=" this.geofenceEmail.hasError('pattern') " class="icon-color-bad">Please enter valid email</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 geoButtonSubmit">
+              <div class="row padding-5 geoSubmitButton geoInput">
+                <button class="btn btn-info btn-sm" (click)="geofenceEmailSubmit(geoEmail)">Submit</button>
+              </div>
+            </div>
+          </div>-->
+
+
+          <div class="row" *ngIf="this.loadListView.apptStatNbr.id!=5">
+            <div class="col-xs-12 col-sm-6 padding-10 geofieldInput">
+              <div class="row padding-10">
+                <div class="col-xs-5 col-sm-5">
+                  <b>Geofence Miles
+                    <font class="icon-color-bad">*</font>
+                  </b>
+                </div>
+                <div class="col-xs-1 col-sm-1">:</div>
+                <div class="col-xs-6 col-sm-5 no-padding">
+                  <input type="number" class="form-control" [formControl]="this.geofencemiles" name="geofencemiles" [(ngModel)]="geoValue">
+                  <span *ngIf=" this.geofencemiles.hasError('required') &&  this.formValidate" class="icon-color-bad ">Please enter geofence miles </span>
+                  <span *ngIf=" this.geofencemiles.hasError('pattern') " class="icon-color-bad">Please enter valid number between 5 and 150 only</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 geoButtonSubmit">
+              <div class="row padding-10 geoSubmitButton geoInput">
+                <button class="btn btn-primary btn-sm" (click)="geoMilesSubmit(loadListView.apptNbr,geoValue)">Submit</button>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="loadviewPopup.hide()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--email notify popup-->
+<div bsModal #loadNotifyPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="loadNotifyPopup.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Notifications</h4>
+      </div>
+      <div class="modal-body">
+        <section *ngIf="NotifySuccessMessage" class="text-success text-center"> {{NotifySuccessMessage}} </section>
+        <section *ngIf="NotifyFailureMessage" class="icon-color-bad text-center"> {{NotifyFailureMessage}} </section>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 padding-10">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-3">
+                <b>Load Number </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-8">
+                {{loadListView?.apptNbr}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 padding-10">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-3">
+                <b>Email Participants </b>
+              </div>
+              <div class="col-xs-1 col-sm-1">:</div>
+              <div class="col-xs-6 col-sm-8 ">
+                <label class="form-control no-padding" style="border:0px;height:auto">
+                  <select select2 multiple id="notifyEmailMultiSelect" style="width:100%" class="select2 form-control">
+                    <option *ngFor="let user of userList" [value]="user.email">{{user.name}}</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 padding-10">
+            <div class=" col-xs-10 col-sm-10 text-center">
+              <div class="btn btn-primary btn-sm" (click)="notifyEmail(loadListView)"> Submit</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="loadNotifyPopup.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

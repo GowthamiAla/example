@@ -1,0 +1,161 @@
+<div id="content">
+
+  <sa-widgets-grid>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>FoodCourts</h2>
+            <div class="widget-toolbar" role="menu">
+              <a class="btn btn-primary" routerLink="/food/addFood"> Add Food Courts</a>
+            </div>
+          </header>
+          <div>
+            <div class="widget-body  ">
+<div id="content">
+  <sa-widgets-grid>
+
+
+
+<!--<div class="content-top clearfix">
+  <h1 class="al-title">{{ activePageTitle }}</h1>
+  <ul class="breadcrumb al-breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+    <li class="breadcrumb-item active">{{ activePageTitle }}</li>
+  </ul>
+</div>-->
+<div id="wrapper">
+  <div id="page-wrapper" class="gray-bg">
+    <!-- first modal: modal with custom header, content and footer -->
+    <modal #firstModal>
+      <modal-header class="popup_header">
+        <h1 style="color: #FFFFFF;    font-size: 22px;">Dealer Details</h1>
+        <!--   <button class="btn btn-primary" (click)="firstModal.close()"> Close</button> -->
+      </modal-header>
+      <modal-content>
+        <div class="row">
+          <div class="col-sm-22">
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Name</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.name}}</div>
+            </div>
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Address</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.address}}</div>
+            </div>
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Latitude</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.latitude}}</div>
+            </div>
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Longitude</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.longitude}}</div>
+            </div>
+          </div>
+        </div>
+      </modal-content>
+    </modal>
+    <div id="users-page">
+      <div class="row wrapper border-bottom white-bg page-heading custom-font">
+        <!--<div class="col-lg-2">
+          <a class="btn btn-primary" routerLink="/food/addFood">Add Food Courts</a>
+        </div>-->
+      </div>
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="animated fadeIn card">
+              <div class="card-body">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                  <div id="updatesuccessmessage"></div>
+                  <flash-messages></flash-messages>
+                  <div id="errorblock"></div>
+                  <div class="row">
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-6">
+                      <div id="palsDealers_filter" class="dataTables_filter">
+                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="palsDealers" [(ngModel)]="filterQuery"></label>
+                      </div>
+                    </div>
+                  </div>
+                  <table id="foodCourts" class="table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline display custom-font"
+                    [mfData]="foodList | foodDataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" cellspacing="0"
+                    width="100%" cellspacing="0" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder"
+                    width="100%">
+                    <thead>
+                      <tr>
+                        <th>
+                          <mfDefaultSorter by="name">Name </mfDefaultSorter>
+                        </th>
+                        <th>
+                          <mfDefaultSorter by="address">Address</mfDefaultSorter>
+                        </th>
+                        <th>
+                          <mfDefaultSorter>Details / Edit / Delete</mfDefaultSorter>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="gradeA odd" role="row" *ngFor="let food of mf.data">
+                        <td>{{food.name}}</td>
+                        <td>{{food.address}}</td>
+                        <td class=" center">
+                          <button class="food_viewmore btn btn btn-success" (click)="firstModal.open(food.id)" type="button" (click)="getFoodData(food.id)"><i class="fa fa-search"></i></button>
+                          <a class="btn btn-warning" type="button" (click)="goToUpdateFoodDetials(food.id)"><i class="fa fa-edit"></i></a>
+                          <button class="dealer_remove btn btn btn-danger" type="button" (click)="openPopup('small',food)"><i class="fa fa-trash-o"></i></button>
+                       
+                        </td>
+                      </tr>
+                      <tr *ngIf="mf.data.length===0" class="odd">
+                        <td valign="top" colspan="3" class="dataTables_empty">No matching records found</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th style="width:25%">
+                          <mfDefaultSorter by="userName">Name</mfDefaultSorter>
+                        </th>
+                        <th style="width:40%">
+                          <mfDefaultSorter by="role">Address</mfDefaultSorter>
+                        </th>
+                        <th style="width:25%">
+                          <mfDefaultSorter>Details / Edit / Delete</mfDefaultSorter>
+                        </th>
+                      </tr>
+                      <tr>
+                        <td colspan="10" align="right">
+                          <mfBootstrapPaginator></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    </sa-widgets-grid>
+</div>
+                          
+          </div>
+          </div>
+          </sa-widget>
+        </div>
+    </div>
+  </sa-widgets-grid>
+</div>

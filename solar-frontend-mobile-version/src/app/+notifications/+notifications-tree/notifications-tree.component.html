@@ -1,0 +1,240 @@
+<div id="content">
+	<sa-widgets-grid>
+		<sa-widget [editbutton]="false" color="blueDark">
+			<header>
+				<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+				<h2>Notifications Tree </h2>
+
+				<!--<div class="widget-toolbar" role="menu">
+					<a class="btn btn-primary" (click)="refreshView()"><i class="fa  fa-refresh"></i></a>
+				</div>-->
+
+				<div class="widget-toolbar" role="menu">
+					<a class="btn btn-primary" (click)="AddorUpdateChannel('')">Add New Channel</a>
+				</div>
+			</header>
+
+
+			<div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="widget-body no-padding ">
+							<br>
+							<div class="tree smart-form">
+								<ul class="asTree">
+									<input type="checkbox" checked="checked" hidden id="treeExp_3" />
+									<label class=" btn btn-primary btn-sm" for="treeExp_3" (click)="collapseMenu()">Notifications</label>
+									<ul>
+										<li id="treechannel{{modulename}}" *ngFor="let modulename of moduleNames">
+											<input type="checkbox" checked="checked" hidden />
+											<label id="channel{{modulename}}" for={{modulename}}><a (click)="collapseMenu(modulename)"><strong>{{modulename}}</strong></a></label>
+										
+												<ul id="{{modulename}}"> 
+													<li id="{{item.serviceevent.event}}" *ngFor="let item of jsonData  | ticketsGrouping:{module:modulename}">
+														<a (click)="AddorUpdateChannel(item)">{{item.serviceevent.event}}</a>
+													</li>
+												</ul>
+											
+										</li>
+									</ul>
+								</ul>
+							</div>
+
+
+						</div>
+
+					</div>
+					<div class="col-sm-8">
+
+						<div class="custom-scroll  smart-form" *ngIf="menuCollapse">
+
+							<form [formGroup]="complexForm" method="post" class="smart-form client-form">
+
+								<div class="row">
+									<section class="col col-4">
+										<label class="label" for="module" [ngClass]="{'has-error':! this.module.valid &&  this.module}"><strong>Module</strong></label>
+									</section>
+									<section class="col col-4">
+										<label class="input form-control">
+                                <input type="text" name="module"  [formControl]="this.module" [(ngModel)]="notificationChannel.serviceevent.module" placeholder="Module">
+                           
+						   	  <span *ngIf=" this.module.hasError('required') &&submitted  " class=" text-danger ">Please Enter Module name</span>
+
+                  			   <span *ngIf=" this.module.hasError('pattern') " class=" text-danger "> Enter   characters for Module</span>
+
+						   
+						    </label>
+									</section>
+								</div>
+
+
+
+
+								<div class="row">
+									<section class="col col-4">
+										<label class="label" for="code" [ngClass]="{'has-error':! this.code.valid &&  this.code}"><strong>Event Code</strong></label>
+									</section>
+									<section class="col col-4">
+										<label class="input form-control">
+                                <input type="text" name="code" [formControl]="this.code" [(ngModel)]="notificationChannel.serviceevent.code" placeholder="Event Code">
+                           
+						    <span *ngIf=" this.code.hasError('required') &&submitted  " class=" text-danger ">Please Enter code</span>
+
+                  			   <span *ngIf=" this.code.hasError('pattern') " class=" text-danger "> Enter   numerics for Code</span>
+
+						   
+						   </label>
+									</section>
+								</div>
+
+								<div class="row">
+									<section class="col col-4">
+										<label class="label" for="event" [ngClass]="{'has-error':! this.event.valid &&  this.event}"><strong>Event</strong></label>
+									</section>
+									<section class="col col-4">
+										<label class="input form-control">
+                                <input type="text" name="event" [formControl]="this.event" [(ngModel)]="notificationChannel.serviceevent.event" placeholder="Event">
+                           
+						    <span *ngIf=" this.event.hasError('required') &&submitted  " class=" text-danger ">Please Enter event</span>
+
+                  			   <span *ngIf=" this.event.hasError('pattern') " class=" text-danger ">Enter   characters for Event</span>
+
+						   
+						    </label>
+									</section>
+								</div>
+
+							</form>
+
+
+
+							<div class="row">
+								<section class="col col-4">
+									<label class="label" for="emailTemplate"><strong>Email Template </strong></label>
+								</section>
+								<!--<section class="col col-4">
+									<label class="input form-control">
+                                <input type="tel" name="emailTemplate" [(ngModel)]="notificationChannel.emailTemplate " placeholder="Email Template">
+                            </label>
+								</section>-->
+								<section class="col col-4">
+									<label class="input form-control">
+										<select   class="form-control" [compareWith]="byId" [(ngModel)]="notificationChannel.emailTemplate " (change)="emailTemplateOnChange(notificationChannel.emailTemplate)">
+										
+										<option  *ngFor="let x of templatesNames " [ngValue]="x" [selected]="notificationChannel.emailTemplate ==x"  >{{x.name}}</option>
+										</select>
+									</label>
+									<span *ngIf="selectEmailTemplate" class=" text-danger ">Select Email Template</span>
+
+								</section>
+
+							</div>
+
+
+							<div class="row">
+								<section class="col col-4">
+									<label class="label" for="notificationTemplate"><strong>Notification Template </strong></label>
+								</section>
+								<!--<section class="col col-4">
+									<label class="input form-control">
+                                <input type="tel" name="emailTemplate" [(ngModel)]="notificationChannel.emailTemplate " placeholder="Email Template">
+                            </label>
+								</section>-->
+								<section class="col col-4">
+									<label class="input form-control">
+										<select   class="form-control" [compareWith]="byId" [(ngModel)]="notificationChannel.notificationTemplate " (change)="notificationTemplateOnChange(notificationChannel.notificationTemplate)">
+										
+										<option  *ngFor="let y of templatesNames " [ngValue]="y" [selected]="notificationChannel.notificationTemplate ==y"  >{{y.name}}</option>
+										</select>
+									</label>
+									<span *ngIf="selectNotificationTemplate" class=" text-danger ">Select Notification Template</span>
+
+								</section>
+
+							</div>
+
+
+
+							<div class="row">
+								<section class="col col-4">
+									<label class="label" for="phoneTemplate"><strong>SMS Template</strong></label>
+								</section>
+								<section class="col col-4">
+									<label class="input form-control">
+                                <input   [disabled]="true" type="text" name="phoneTemplate" [(ngModel)]="notificationChannel.phoneTemplate" placeholder="SMS Template">
+                            </label>
+								</section>
+							</div>
+
+							<div class="row">
+								<section class="col col-4 tooglePosition">
+									<label class="label" for="email"><strong>Email</strong></label>
+								</section>
+								<section class="col ">
+									<label class="input toggle ">
+                                <input checked="checked" [(ngModel)]="notificationChannel.email" name="email" type="checkbox">
+                                <i data-swchoff-text="OFF" data-swchon-text="ON"></i>
+                            </label>
+								</section>
+							</div>
+
+							<div class="row">
+								<section class="col col-4 tooglePosition" >
+									<label class="label" for="sms"><strong>SMS</strong></label>
+								</section>
+								<section class="col ">
+									<label class="input toggle">
+                                <input checked="checked" [(ngModel)]="notificationChannel.sms"  name="sms" type="checkbox">
+                                <i data-swchoff-text="OFF" data-swchon-text="ON"></i>
+                            </label>
+								</section>
+							</div>
+
+							<div class="row">
+								<section class="col col-4 tooglePosition" >
+									<label class="label" for="notificationCenter"><strong>Notification Center</strong></label>
+								</section>
+								<section class="col ">
+									<label class="input toggle">
+                                <input checked="checked" [(ngModel)]="notificationChannel.notificationCenter"  name="notificationCenter" type="checkbox"><i data-swchoff-text="OFF" data-swchon-text="ON"></i>
+                            </label>
+								</section>
+							</div>
+
+							<section *ngIf="channelLoginError" style="color: red;"> {{channelLoginError}} </section>
+
+							<footer *ngIf="!buttonEnable">
+								<span style="color: green;" *ngIf="notificationDeleteMessage">{{notificationDeleteMessage}}</span>
+								<span style="color: green;" *ngIf="notificationAddorUpdateMessage">{{notificationAddorUpdateMessage}}</span>
+								<span style="color: red;" *ngIf="notificationUpdateErrorMessage">{{notificationUpdateErrorMessage}}</span>
+								<button class="btn  btn-success btn-sm" type="submit" (click)="notificationChannelAdd(notificationChannel,'update')" [disabled]="!complexForm.valid">Update</button>
+								<button class="btn  btn-warning btn-sm" type="submit" (click)="notificationChannelDelete(notificationChannel)">Delete</button>
+
+							</footer>
+
+							<footer *ngIf="buttonEnable">
+								<span style="color: green;" *ngIf="notificationDeleteMessage">{{notificationDeleteMessage}}</span>
+							
+								<span style="color: green;" *ngIf="notificationAddorUpdateMessage">{{notificationAddorUpdateMessage}}</span>
+								<span style="color: red;" *ngIf="notificationUpdateErrorMessage">{{notificationUpdateErrorMessage}}</span>
+								<button class="btn  btn-success btn-sm" type="submit" (click)="notificationChannelAdd(notificationChannel,'add')" [disabled]="!complexForm.valid">Add</button>
+								<button class="btn  btn-warning btn-sm" type="submit" onclick="window.history.back();">Cancel</button>
+
+							</footer>
+
+
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+		</sa-widget>
+
+	</sa-widgets-grid>
+</div>

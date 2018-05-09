@@ -1,0 +1,57 @@
+<div id="content">
+	<!--<a routerLink="/admin/report/add"><button class="btn btn-sm btn-success" type="button" style="margin-left: 1060px;">
+                     Add Report
+                  </button></a>
+	<br/> <br/>-->
+	<div class="row">
+		<div class="col-sm-12">
+			<sa-widgets-grid>
+
+
+				<div sa-widget [editbutton]="false" [deletebutton]="false" color="blueDark">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+						<h2>Report Details</h2>
+
+						<div *ngIf="reportReport" class="widget-toolbar" role="menu">
+							<a class="btn btn-primary" routerLink="/admin/report/add"> Add Report</a>
+						</div>
+					</header>
+					<div>
+						<div class="widget-body no-padding ">
+
+							<section *ngIf="errorMessage" class="icon-color-bad text-center"> {{errorMessage}} </section>
+							<section *ngIf="sucessMessage" class="text-success text-center"> {{sucessMessage}} </section>
+
+							<section *ngIf="reportUpdateMessages" class="text-success text-center"> {{reportUpdateMessages}} </section>
+							<sa-datatable id="DataTable" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true"
+								tableClass="table table-striped table-bordered table-hover" width="100%">
+				 				<thead>
+									<tr>
+										<th>Report ID</th>
+										<th>Report Name</th>
+										<th>Report Type</th>
+
+										<th>Delete </th>
+									</tr>
+								</thead>
+
+								<tfoot>
+									<tr>
+										<th>Report ID</th>
+										<th>Report Name</th>
+										<th>Report Type</th>
+
+										<th>Delete </th>
+									</tr>
+								</tfoot>
+							</sa-datatable>
+
+						</div>
+					</div>
+				</div>
+
+			</sa-widgets-grid>
+		</div>
+	</div>
+</div>

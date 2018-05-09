@@ -1,0 +1,191 @@
+<div id="content">
+
+  <sa-widgets-grid>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>FoodCourts</h2>
+            
+          </header>
+          <div>
+            <div class="widget-body  ">
+<div id="content">
+  <sa-widgets-grid>
+
+
+<!--<div class="content-top clearfix">
+  <h1 class="al-title">{{ activePageTitle }}</h1>
+  <ul class="breadcrumb al-breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/food"> FoodCourts   </a></li>
+    <li class="breadcrumb-item active">{{ activePageTitle }}</li>
+  </ul>
+</div>-->
+<div id="wrapper">
+  <div id="page-wrapper" class="gray-bg">
+    <!-- first modal: modal with custom header, content and footer -->
+    <modal #firstModal>
+      <modal-header class="popup_header" style="background-color: #1AB394;">
+        <h1 style="color: #FFFFFF;    font-size: 22px;">Dealer Details</h1>
+        <!--   <button class="btn btn-primary" (click)="firstModal.close()"> Close</button> -->
+      </modal-header>
+      <modal-content>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Name</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.name}}</div>
+            </div>
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Address</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.address}}</div>
+            </div>
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Latitude</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.latitude}}</div>
+            </div>
+            <div class="row" *ngIf="food">
+              <div class="col-sm-5">Longitude</div>
+              <div class="col-sm-1">:</div>
+              <div class="col-sm-6 ">{{food.longitude}}</div>
+            </div>
+          </div>
+        </div>
+      </modal-content>
+    </modal>
+    <div class="container">
+      <div class="modal modal-fullscreen fade" id="add_foodcourt_Modal" role="dialog">
+        <div class="modal-dialog confirm_model">
+          <div class="modal-content confirmDialogueBox">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Update FoodCourt</h4>
+            </div>
+            <div class="modal-body">
+              <p>You are about to add this location to service.</p>
+              <p>Do you want to proceed..?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary btn add_foodcourt">Yes</button>
+              <button type="button" class="btn btn-primary btn" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="loads-page">
+      <div class="row wrapper border-bottom white-bg page-heading custom-font">
+        <div class="col-lg-2"></div>
+      </div>
+      <div class="wrapper wrapper-content animated fadeInRight custom-font">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="animated fadeIn card">
+              <div class="card-body">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                  <div id="successmessage"></div>
+                  <div id="updatesuccessmessage"></div>
+                  <flash-messages></flash-messages>
+                  <div id="errorblock"></div>
+                  <form [formGroup]="complexForm" class="form" (ngSubmit)="submitForm(complexForm.value)" method="post">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="foodName" >
+																										Name
+
+														<font class="redFont">*</font>
+													</label>
+													<div class="controls col-sm-6" *ngIf="food">
+														<input class="form-control" maxLength="30" type="text" name="foodName" size="30" [formControl]="this.foodName" value="{{food.name}}"
+																		[(ngModel)]="food.name">
+														 <span *ngIf=" this.foodName.hasError('required') &&  this.formValidate" class="alert redFont ">Please Enter FoodCourt Name</span>
+                               <span *ngIf="this.foodName.hasError('pattern')" class="alert redFont">Please Enter alphanumerics only</span>
+													</div>
+												</div>
+												<div class="row">
+													<label class="col-sm-4 control-label" for="address" >
+																												Address
+															<font class="redFont">*</font>
+														</label>
+                          <div class="controls col-sm-6" *ngIf="food">
+                            <input class="form-control" type="text" name="address" id="address" [formControl]="this.address" value="{{food.address}}"
+                              [(ngModel)]="food.address" (keyup)="onchange(this.address,food)">
+							<span *ngIf="foodAddressList " >
+															<div >
+															<div class = "mapbox_address" *ngFor="let foodItem of foodAddressList">
+																<p (click)="foodItemSelected(foodItem)" >{{foodItem.value}}</p>
+															</div>
+															</div>
+														</span>	
+                              <span *ngIf=" this.address.hasError('required') &&  this.formValidate" class="alert redFont ">Please Enter Food Court Address</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="latitude" >
+																												Latitude
+																<font class="redFont">*</font>
+															</label>
+                          <div class="controls col-sm-6" *ngIf="food">
+                            <input class="form-control" maxLength="30" type="text" name="latitude" size="30" [formControl]="this.latitude" [(ngModel)]="food.latitude"
+                              readonly>
+                              <span *ngIf="this.latitude.hasError('required') &&  this.formValidate" class="alert redFont ">Please Enter Latitude</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="longitude" >
+																												Longitude
+																	<font class="redFont">*</font>
+																</label>
+                          <div class="controls col-sm-6" *ngIf="food">
+                            <input class="form-control" maxLength="30" type="text" name="latitude" size="30" [formControl]="this.longitude" [(ngModel)]="food.longitude"
+                              readonly>
+                              <span *ngIf=" this.longitude.hasError('required') &&  this.formValidate" class="alert redFont ">Please Enter Latitude</span>
+                          </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                          <div class="control-group col-sm-6 col-sm-offset-6">
+                            <input id="foodCourt_id" name="foodCourt_id" value="243" type="hidden">
+                            <button type="button" class="btn btn-primary btn" (click)="submitForm()">
+																				<i class="fa fa-save"></i> Save
+
+																			</button>
+                            <!--<a style="margin-left: 5px;" (click)="goBack()" class="btn btn-default">Cancel</a>-->
+                            <button class="btn btn-default" type="button" (click)="goBack()">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="map" id="update_addressMap">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </sa-widgets-grid>
+</div>
+                          
+          </div>
+          </div>
+          </sa-widget>
+        </div>
+    </div>
+  </sa-widgets-grid>
+</div>

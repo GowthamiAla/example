@@ -1,0 +1,65 @@
+<aside id="left-panel">
+
+  <!-- User info -->
+  <sa-login-info></sa-login-info>
+  <!-- end user info -->
+
+  <nav>
+    <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+    Please note that these links work a bit different than
+    traditional href="" links. See documentation for details.
+    -->
+
+    <ul saSmartMenu>
+
+        <!-- <li routerLinkActive="active">
+            <a routerLink="/home" title="Home">
+                <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{'Home' | i18n}}</span></a>
+        </li> -->
+      <li>
+        <a title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span
+          class="menu-item-parent">{{'Dashboard' | i18n}}</span></a>
+        <ul>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/analytics">{{'Analytics Dashboard' | i18n}}</a>
+          </li>
+          <!-- <li routerLinkActive="active">
+            <a routerLink="/dashboard/social">{{'Social Wall' | i18n}}</a>
+          </li> -->
+        </ul>
+      </li>
+
+      
+      <li routerLinkActive="active" *ngIf="userRole=='ADMIN'">
+        <a routerLink="/admin/users" title="Admin"><i class="fa fa-lg fa-fw fa-user"></i> <span
+        class="menu-item-parent">{{'Admin'| i18n }}</span></a>
+        <ul>
+          <li routerLinkActive="active">
+            <a (click)="onToggle()" routerLink="/admin/users">{{'Users' | i18n}}</a>
+          </li>
+
+          <li routerLinkActive="active">
+            <a (click)="onToggle()" routerLink="/admin/notificationstree">{{'Notification Channels' | i18n}}</a>
+          </li>
+
+          <li routerLinkActive="active">
+            <a (click)="onToggle()" routerLink="/admin/template">{{'Template'| i18n }}</a>
+          </li>
+          <li routerLinkActive="active">
+            <a (click)="onToggle()" routerLink="/admin/report">{{'Reports'| i18n }}</a>
+          </li>
+      </ul>
+    </li>
+
+    <li routerLinkActive="active" *ngIf="userRole!='DCMANAGER'">
+        <a  (click)="onToggle()" routerLink="/calendar">
+          <i class="fa fa-lg fa-fw fa-calendar"></i>
+          <span class="menu-item-parent">{{'Calendar' | i18n}}</span></a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <sa-minify-menu></sa-minify-menu>
+
+</aside>

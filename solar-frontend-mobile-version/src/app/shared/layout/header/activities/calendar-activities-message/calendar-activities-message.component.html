@@ -1,0 +1,20 @@
+<!--<span >
+ 
+    <strong><span class="title">{{events.title}}</span></strong>
+      <strong><span class="title">{{events.description}}</span></strong>
+    <span class="from" style="font-size:13px;margin:0px"><strong>When : {{events.start | momentdategrouped:'MMMM Do, h:mm a' }}</strong></span>
+ 
+  
+</span>-->
+
+<div class="message-custom-text">
+  <span class="title">{{events.title}}</span><br>
+  <span class="message-text">{{events.description}}</span>
+  <div class=" font-xs">
+
+    <div class="text-muted"> <em>{{events.start | momentdategrouped:'MMMM Do YYYY, h:mm:ss a' }}</em>
+    </div>
+  </div>
+  <div class="timeline-seperator text-center"></div>
+  <br>
+</div>

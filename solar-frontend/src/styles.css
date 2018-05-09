@@ -1,0 +1,195 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* #GOOGLE FONT */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700");
+
+
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+    color: #ff0000 !important;
+}
+
+.has-error input[type=text], .has-error input[type=text]+.input-group-addon {
+    border-color: #BDBDBD !important;
+}
+
+.calendar-EventFont{
+  padding: 3px 0 2px 3px;
+  line-height: 16px;
+     font-weight: 700;
+    font-size: 11px;
+
+}
+.fc-list-item-title a{
+  color:#fff !important;
+}
+.calendar-ion-position{
+  float:right;
+}
+
+/*.fc-list-heading .*/
+.fc-list-table .fc-widget-content,.fc-list-table td {
+  padding:8px;
+}
+.fc-scroller{
+  height:100% !important;
+}
+.fc-list-table{
+  table-layout: auto !important;
+}
+.fc-list-heading{
+  font-weight:bold
+}
+@media only screen and (max-width: 479px) and (min-width: 320px){
+.fc-event .fa {
+    font-size: 8px !important;
+  }
+
+  .calendar-EventFont {
+    padding: 3px 0 2px 3px;
+    line-height: 10px ;
+    font-weight: 700;
+    font-size: 7px ;
+}
+
+/*mobile header logo and logo title*/
+.logoName{
+  padding-right: 44px;
+  }
+
+}
+
+  /*calendar events background color*/
+.bg-calendar-color-blue {
+    background-color: #0091d9!important;
+}
+
+.bg-calendar-color-green {
+  background-color: #3ec140 !important;
+}
+
+.bg-calendar-color-red {
+  background-color: #F35325 !important;
+}
+
+  /*templates edit notepad editor*/
+.no-padding .note-editor{
+   border: 1px solid #a9a9a9 !important
+   }
+
+   /*logo in header for medium and large devices*/
+  @media only screen and (min-width: 479px){ 
+    .logoName{
+     padding-right: 90px;
+    }
+  }
+
+.logoBox{
+  padding:10px;
+}
+ .logoName{
+        font-size:18px;
+        color:#CB5230;
+        font-family: sans-serif;
+      }
+
+      .logoImage{
+        width:50px !important;
+        height:32px !important;
+        margin-bottom: 4px;
+      }
+
+ /*health charts*/
+.highcharts-container{
+    width:100% !important;
+  }
+  .highcharts-root{
+    width:100% !important;
+  }
+.select2-container-multi .select2-choices .select2-search-choice, .select2-selection__choice {
+    padding: 1px 28px 1px 8px !important;
+    margin: 4px 0 3px 5px !important;
+    position: relative !important;
+    line-height: 18px;
+    color: #fff;
+    cursor: default;
+    border: 1px solid #2a6395;
+}
+.select2-container-multi .select2-choices, .select2-selection--multiple{
+border: 1px solid #ccc !important;
+}   
+
+.select2-selection__choice__remove{
+  line-height:1.3 !important;
+}
+
+.customTemplateEditorEnhancement .modal .modal-dialog{
+margin:auto !important;
+top:15%;
+}
+
+.customTemplateEditorEnhancement .modal .modal-content{
+  padding: 10px;
+}
+.customTemplateEditorEnhancement .modal .modal-content .modal-body .form-group{
+  padding: 10px;
+}
+.customTemplateEditorEnhancement .modal .modal-content .modal-body .checkbox{
+  display:none;
+}
+
+.customTemplateEditorEnhancement .modal .modal-footer .btn{
+  margin-top: 7px;
+  padding:7px;
+}
+
+.fc-event .fc-title{
+  display:block;
+}
+
+
+
+
+
+/*div.loading{
+    height: 100px;
+    background-color: red;
+    display: none;
+}*/
+router-outlet + div.loading{
+    display: block;
+}
+
+div.loading {
+  position: static;
+  width: 40px;
+  height: 40px;
+  background-color: #2a6395;
+
+  margin: 300px auto;
+  
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+
+   display: none;
+}
+
+@-webkit-keyframes sk-rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes sk-rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+

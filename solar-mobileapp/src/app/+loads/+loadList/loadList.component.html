@@ -1,0 +1,88 @@
+<div class="headerRibbon" id="ribbon">
+    <span class="ribbon-button-alignment breadcrumb">
+        <span class="btn btn-ribbon" placement="bottom">
+            <i class="fa fa-truck"></i>
+        </span> Load board
+    </span>
+</div>
+
+<div style="margin:1%">
+    <div>
+        <div *ngIf="loadList?.length===0" class="panel panel-default">
+            <div class="panel-body" style="text-align:center">No loads are assigned to you</div>
+        </div>
+        <div class="panel panel-default" *ngFor="let load of loadList">
+            <div class="panel-heading load-header">
+                <b>Load Number</b> : {{load.apptNbr}}
+                <span *ngIf="load.apptStatNbr.id === 4" style="float:right">Load Accepted</span>
+            </div>
+            <div class="panel-body">
+                <div class="row load-view">
+                    <div class="col-sm-6 ">
+                        <div class="row">
+                            <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle padding-5">
+                                <b>Pickup Address</b>
+                            </div>
+                            <div class="col-sm-1 col-xs-1 col-md-1 padding-5"> : </div>
+                            <div class="col-sm-6 col-xs-5 col-md-5 padding-5">
+                                {{load.originLocNbr.locAddrName}} , {{load.originLocNbr.address}},
+                                <br> {{load.originLocNbr.city}} , {{load.originLocNbr.state}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle padding-5">
+                                <b>Destination Address</b>
+                            </div>
+                            <div class="col-sm-1 col-xs-1 col-md-1 padding-5"> : </div>
+                            <div class="col-sm-6 col-xs-5 col-md-5 padding-5">
+                                {{load.destLocNbr.locAddrName}} , {{load.destLocNbr.address}}
+                                <br>{{load.destLocNbr.city}} , {{load.destLocNbr.state}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row load-view">
+                    <!--<div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle"><b> Distance</b></div>
+                            <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                            <div class="col-sm-6 col-xs-5 col-md-5">{{getTimeandDistanceValues(load.originLocNbr.latitude,load.originLocNbr.longitude,load.destLocNbr.latitude,load.destLocNbr.latitude)}}</div>
+                        </div>
+                    </div>-->
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle padding-5">
+                                <b>Vendor Name</b>
+                            </div>
+                            <div class="col-sm-1 col-xs-1 col-md-1 padding-5"> : </div>
+                            <div class="col-sm-6 col-xs-5 col-md-5 padding-5">{{load.vndNbr.vendorName}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle padding-5">
+                                <b>High Priority</b>
+                            </div>
+                            <div class="col-sm-1 col-xs-1 col-md-1 padding-5"> : </div>
+                            <div class="col-sm-6 col-xs-5 col-md-5 padding-5">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="load.highPriorityLoad" onclick="return false;">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="load panel-footer" align="right" (click)="loadDetails(load.apptNbr)">
+                <div class="footer-view-btn"> VIEW
+                    <i class="glyphicon glyphicon-circle-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!loadList">
+        <div class="panel-body" style="text-align:center"> {{loadListdataError}} </div>
+    </div>
+</div>

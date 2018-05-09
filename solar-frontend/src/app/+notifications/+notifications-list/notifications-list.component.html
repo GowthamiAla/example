@@ -1,0 +1,62 @@
+<div id="content">
+	<sa-widgets-grid>
+		<sa-widget [editbutton]="false" color="blueDark">
+			<header>
+				<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+				<h2>Notifications List </h2>
+			</header>
+			<div>
+				<div class="widget-body no-padding ">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="well">
+								<span *ngIf="currentView=='notificationsList'">
+								<div *ngFor="let items of grouped  ">
+									<p class="alert alert-info"> <strong> {{items[0].lastUpdateTime |  moment:"MMMM Do YYYY" }}</strong></p>
+									<div class="message message-reply" *ngFor="let item of items  ">
+										<!--<span class="message-text"> <a class="username" >{{item.email}} </a> {{item.serviceevent.module}} 
+											<p>	{{item.serviceevent.event}}</p>  </span>-->
+								<span class="message-text" [innerHTML]="item.notificationContext"></span>
+
+								<div class=" font-xs">
+									<div class="text-muted"> <em>{{item.lastUpdateTime|moment:"MMMM Do YYYY, h:mm:ss a"  }}</em>
+									</div>
+
+								</div>
+
+								<div class="timeline-seperator text-center"></div>
+								<br>
+							</div>
+
+						</div>
+						</span>
+
+						<span *ngIf="currentView=='calendarsList'">
+				<div *ngFor="let events of calendarGrouped  ">
+					<p class="alert alert-info"> <strong> {{events[0].lastUpdateTime |  moment:"MMMM Do YYYY" }}</strong></p>
+					<div class="message message-reply" *ngFor="let calendarItem of events  ">
+						<span class="title">{{calendarItem.title}}</span>
+						<br>
+						<span class="message-text">{{calendarItem.description}}</span>
+						<div class=" font-xs">
+							<div class="text-muted"> <em>{{calendarItem.start | momentdategrouped:'MMMM Do, h:mm a' }}</em>
+							</div>
+						</div>
+						<div class="timeline-seperator text-center"></div>
+						<br>
+
+					</div>
+
+				</div>
+				</span>
+
+			</div>
+</div>
+</div>
+
+</div>
+</div>
+</sa-widget>
+
+</sa-widgets-grid>
+</div>

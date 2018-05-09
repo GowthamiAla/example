@@ -1,0 +1,10 @@
+<div class="message-custom-text">
+  <span class="message-text" [innerHTML]="item.notificationContext"></span>
+  <div class=" font-xs">
+
+    <div class="text-muted"> <em>{{item.lastUpdateTime|moment:"MMMM Do YYYY, h:mm:ss a"  }}</em>
+    </div>
+  </div>
+  <div class="timeline-seperator text-center"></div>
+  <br>
+</div>

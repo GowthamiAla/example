@@ -1,0 +1,185 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData"  id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Location Details </h2>
+            <div class="widget-toolbar" role="menu">
+              <a class="btn btn-primary" routerLink="locations/addLocation"> Add Location</a>
+            </div>
+          </header>
+          <div>
+
+            <div class="widget-body no-padding ">
+              <section *ngIf="locationDeleteSuccess" class="text-success text-center"> {{locationDeleteSuccess}} </section>
+              <section *ngIf="locationDeleteFailure" class="icon-color-bad text-center"> {{locationDeleteFailure}} </section>
+
+
+
+              <sa-datatable id="DataTable" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true" width="100%">
+                <thead>
+                  <tr>
+                    <th>Location Number</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Details/Preview </th>
+                  </tr>
+                </thead>
+
+
+                <tfoot>
+                  <tr>
+                    <th>Location Number</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Details/Preview </th>
+                  </tr>
+                </tfoot>
+              </sa-datatable>
+            </div>
+          </div>
+        </sa-widget>
+
+      </div>
+    </div>
+
+  </sa-widgets-grid>
+</div>
+
+
+<div bsModal #locationviewPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="locationviewPopup.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">View Location</h4>
+      </div>
+      <div class="modal-body ">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b>Location Number</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.locNbr}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5  ">
+                <b>Location Name</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class=" col-xs-6 col-sm-5 padding-5">
+                {{locationView?.locAddrName}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>Email</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5" style="word-wrap: break-word;">
+                {{locationView?.email}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>Phone Number</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.phoneNumber}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>Address</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.address}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>City</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.city}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>State</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.state}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>ZipCode</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.zipCode}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class="col-xs-5 col-sm-5 padding-5 ">
+                <b>Country</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{locationView?.country}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="locationviewPopup.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

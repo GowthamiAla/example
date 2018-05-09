@@ -1,0 +1,186 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData"  id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Vendors Details </h2>
+            <div class="widget-toolbar" role="menu">
+              <a class="btn btn-primary" routerLink="/vendors/addVendor"> Add Vendor</a>
+            </div>
+          </header>
+          <div>
+            <div class="widget-body no-padding ">
+              <section *ngIf="vendorDeleteSuccess" class="text-success text-center"> {{vendorDeleteSuccess}} </section>
+              <section *ngIf="vendorDeleteFailure" class="icon-color-bad text-center"> {{vendorDeleteFailure}} </section>
+              <sa-datatable id="DataTable" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true" width="100%">
+                <thead>
+                  <tr>
+                    <th>Vendor Number</th>
+                    <th>Vendor Name</th>
+                    <th>Phone Number</th>
+                    <th>Edit/View/Delete </th>
+                  </tr>
+                </thead>
+
+                <tfoot>
+                  <tr>
+                    <th>Vendor Number</th>
+                    <th>Vendor Name</th>
+                    <th>Phone Number</th>
+                    <th>Edit/View/Delete </th>
+                  </tr>
+                </tfoot>
+              </sa-datatable>
+            </div>
+          </div>
+        </sa-widget>
+
+      </div>
+    </div>
+
+  </sa-widgets-grid>
+</div>
+
+<div bsModal #vendorviewPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="vendorviewPopup.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">View Vendor</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b>Vendor Number </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.vendorNbr}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5  ">
+                <b>Vendor Name </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class=" col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.vendorName}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b>Phone Number </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.phoneNumber }}
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b> Email </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.email}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b> Address </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.address}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b>State</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.state}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b> City </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.city}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b>Country</b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.country}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 ">
+            <div class="row">
+              <div class=" col-xs-5 col-sm-5 padding-5 ">
+                <b> Zipcode </b>
+              </div>
+              <div class="col-xs-1 col-sm-1 padding-5">:</div>
+              <div class="col-xs-6 col-sm-5 padding-5">
+                {{vendorListView?.zipCode}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="vendorviewPopup.hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

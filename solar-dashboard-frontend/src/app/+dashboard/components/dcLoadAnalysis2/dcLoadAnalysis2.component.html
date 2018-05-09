@@ -1,0 +1,172 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+
+<div [hidden]="serviceErrorData" id="content">
+    <sa-widgets-grid color="blueDark">
+
+        <div bsModal #analyticspopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" (click)="analyticspopup.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Vendor Details</h4>
+                    </div>
+
+                    <div class="row" *ngIf="analyticspopup.isShown">
+                        <div class="col-lg-12">
+                            <sa-datatable id="DataTable" [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Load Number</th>
+                                        <th>Destination</th>
+                                        <th>Sch. Arrival Date</th>
+                                        <th>Act. Arrival Date</th>
+                                        <th>Vendor Name </th>
+                                        <th>Appointment Status </th>
+                                    </tr>
+                                </thead>
+
+                                <tfoot>
+                                    <tr>
+                                        <th>Load Number</th>
+                                        <th>Destination</th>
+                                        <th>Sch. Arrival Date</th>
+                                        <th>Act. Arrival Date</th>
+                                        <th>Vendor Name </th>
+                                        <th>Appointment Status </th>
+                                    </tr>
+                                </tfoot>
+                            </sa-datatable>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" (click)="analyticspopup.hide()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<modal #loadModal>
+			<modal-header [show-close]="true" class='loadDetailsPopHeader'>
+				<h1 class="modal-title">Vendor Details</h1>
+			</modal-header>
+			<modal-body>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="jqgrid-ui-popup">
+							<table id="vendor-grid-table" class="table table-striped"></table>
+							<div id="vendor-grid-pager"></div>
+						</div>
+					</div>
+				</div>
+			</modal-body>
+		</modal>-->
+        <div class="row">
+            <div class="col-sm-12">
+                <sa-widget [editbutton]="false" color="blueDark">
+                    <header>
+                        <span class="widget-icon">
+                            <i class="fa fa-bar-chart-o"></i>
+                        </span>
+                        <h2>Load size(sum of cartons for all loads) across DC's</h2>
+
+                        <div class="widget-toolbar" role="menu" (click)="openReportsDropDown()" dropdown [ngClass]="DropDownTooglePopup">
+                            <a class="btn btn-success btn-xs" title="Reports" dropdownToggle style="color:#fff;">Reports</a>
+                            <div class="FilterDropDownAnimation dropdown-menu dropdown-menu-large filterDropwdownViewAlign " role="menu" (click)="$event.stopPropagation()">
+                                <div id="checkout-form" class="smart-form">
+                                    <header style="padding:2px">Reports</header>
+                                    <fieldset>
+                                        <span *ngIf="errorMessage" class="icon-color-bad">{{errorMessage}}</span>
+                                        <div class="row form-group">
+                                            <section class="col col-xs-4 filterFormAlign">
+                                                <label class="label">Start Date</label>
+                                            </section>
+                                            <section class="col col-xs-8">
+                                                <label class="form-control" style="border:0px">
+                                                    <my-date-picker [options]="myDatePickerOptions" [selDate]="startDate" [(ngModel)]="QueryData.startDate" name="startDate"></my-date-picker>
+                                                </label>
+                                            </section>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <section class="col col-xs-4 filterFormAlign">
+                                                <label class="label">End Date</label>
+                                            </section>
+                                            <section class="col col-xs-8">
+                                                <label class="form-control" style="border:0px">
+                                                    <my-date-picker [options]="myDatePickerOptions" [selDate]="endDate" [(ngModel)]="QueryData.endDate" name="endDate"></my-date-picker>
+                                                </label>
+                                            </section>
+                                        </div>
+
+                                    </fieldset>
+
+                                    <fieldset style="padding:5px">
+                                        <div style="float:right;">
+                                            <button class="btn  btn-warning btn-sm" type="submit" (click)="onReportsEventCancel()">Cancel</button>
+                                            <button class="btn  btn-success btn-sm" type="submit" (click)="onReportsEventSubmit()">Submit</button>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <div id="dc-loads-size-chart" class="dc-chart">
+                                <a class="reset" style="display: none;">reset</a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </sa-widget>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <sa-widget [editbutton]="false" color="blueDark">
+                    <header>
+                        <span class="widget-icon">
+                            <i class="fa fa-bar-chart-o"></i>
+                        </span>
+                        <h2>Vendor vs Loads Count</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <div id="vendor-loads-chart" class="dc-chart">
+                                <a class="reset" style="display: none;">reset</a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </sa-widget>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <sa-widget [editbutton]="false" color="blueDark">
+                    <header>
+                        <span class="widget-icon">
+                            <i class="fa fa-bar-chart-o"></i>
+                        </span>
+                        <h2>EarlyLoads and LateLoads Count for each DC</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <div id="dc-composite-chart" class="dc-chart">
+                                <a class="reset" style="display: none;">reset</a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </sa-widget>
+            </div>
+        </div>
+
+    </sa-widgets-grid>
+</div>

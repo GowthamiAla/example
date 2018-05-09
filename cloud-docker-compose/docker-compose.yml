@@ -1,0 +1,36 @@
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: solarDockerfile
+    container_name: solarapp
+    ports:
+      - "8080:8080"
+      - "28080:28080"
+    networks: 
+      dbn: 
+        ipv4_address: 11.5.0.12
+    depends_on:
+      - db
+  db:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./mysolardata:/var/lib/mysql
+    container_name: mysqlsolardb
+    environment:
+      MYSQL_ROOT_PASSWORD: "HdC7hj2hF8nK"
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      dbn:
+        ipv4_address: 11.5.0.11
+networks:
+  dbn:
+    driver: bridge
+    ipam: 
+      config:
+        - subnet: 11.5.0.0/16 
+version: "3"

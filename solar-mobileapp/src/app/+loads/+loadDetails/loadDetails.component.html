@@ -1,0 +1,164 @@
+<div class="headerRibbon" id="ribbon">
+    <span class="ribbon-button-alignment breadcrumb">
+        <span class="btn btn-ribbon" placement="bottom">
+            <i class="fa fa-truck"></i>
+        </span> Load Details
+    </span>
+</div>
+
+
+
+<div style="margin:1%">
+    <div class="panel panel-default" *ngIf="loadDetailsData">
+        <div class="panel-heading load-header">
+            <div class="row">
+                <div>
+                    <b class="load-title">Load Number</b> : {{loadDetailsData?.apptNbr}}</div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="border-bottom:1px solid rgb(245,245,245)">
+            <div class="row load-view">
+                <div class="col-sm-6 padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle">
+                            <b> Pickup Address</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <div class="col-sm-6 col-xs-5 col-md-5">
+                            {{loadDetailsData?.originLocNbr.locAddrName}} , {{loadDetailsData?.originLocNbr.address}},
+                            <br>{{loadDetailsData?.originLocNbr.city}} , {{loadDetailsData?.originLocNbr.state}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6  padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle">
+                            <b>Destination Address</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <div class="col-sm-6 col-xs-5 col-md-5">
+                            {{loadDetailsData?.destLocNbr.locAddrName}} , {{loadDetailsData?.destLocNbr.address}},
+                            <br>{{loadDetailsData?.destLocNbr.city}} , {{loadDetailsData?.destLocNbr.state}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row load-view">
+                <div class="col-sm-6 padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle">
+                            <b>Vendor Name</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <div class="col-sm-6 col-xs-5 col-md-5">{{loadDetailsData?.vndNbr.vendorName}}</div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle">
+                            <b>Vendor Phone</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <div class="col-sm-6 col-xs-5 col-md-5">{{loadDetailsData?.vndNbr.phoneNumber}}</div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row load-view">
+                <div class="col-sm-6 padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle">
+                            <b> Distance</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <!--<div class="col-sm-6 col-xs-5 col-md-5"> {{getTimeandDistanceValues(loadDetailsData?.originLocNbr.latitude, loadDetailsData?.originLocNbr.longitude,loadDetailsData?.destLocNbr.latitude,
+                                loadDetailsData?.destLocNbr.longitude)}}
+                        </div>-->
+                        <div class="col-sm-6 col-xs-5 col-md-5">{{distanceValue}}</div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle">
+                            <b>High Priority</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <div class="col-sm-6 col-xs-5 col-md-5">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="loadDetailsData.highPriorityLoad" onclick="return false;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row load-view">
+                <div class="col-sm-6 padding-5">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 col-md-5 load-subtitle ">
+                            <b>High Value</b>
+                        </div>
+                        <div class="col-sm-1 col-xs-1 col-md-1"> : </div>
+                        <div class="col-sm-6 col-xs-5 col-md-5">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="loadDetailsData.highValueLoad" onclick="return false;" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="load panel-footer" align="center">
+            <div class="load-btns" *ngIf="(loadDetailsData?.apptStatNbr.id ===2)">
+                <!--load yet to accepted-->
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                        <div align="right">
+                            <button type="button" class="btn bg-color-orange txt-color-white" (click)="loadCancel()">Decline</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                        <div align="left">
+                            <button type="button" class="btn btn-success" (click)="loadAccept(loadDetailsData?.apptNbr)">Accept</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--load Accepted-->
+
+            <div class="load-btns">
+                <div class="row" *ngIf="(loadDetailsData?.apptStatNbr.id ===4)">
+                    <div>
+                        <strong class="padding-10">Load Accepted </strong>
+                    </div>
+                    <br>
+                    <div>
+                        <a class="btn btn-success btn-sm" (click)="onNavigateMap()">Navigate Map</a>
+                    </div>
+                </div>
+                <!--load Completed-->
+                <div class="row" *ngIf="(loadDetailsData?.apptStatNbr.id ===5)">
+                    <div>
+                        <strong class="padding-10">Load Completed</strong>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="!loadDetailsdataError">
+            <div class="panel-body" style="text-align:center"> {{loadDetailsdataError}} </div>
+        </div>
+    </div>
+
+</div>

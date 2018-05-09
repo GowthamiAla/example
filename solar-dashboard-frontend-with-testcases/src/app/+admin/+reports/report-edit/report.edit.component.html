@@ -1,0 +1,53 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- MAIN CONTENT -->
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Edit Widget </h2>
+          </header>
+          <div class="widget-body">
+            <section *ngIf="reportError" class="icon-color-bad"> {{reportError}} </section>
+
+            <form class="smart-form">
+              <fieldset>
+                <div *ngIf="report" class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="reportName">Report Name</label>
+                  </section>
+                  <section class="col col-4">
+                    <label class="input form-control">
+                      <input type="text" name="reportName" [(ngModel)]="report.name" placeholder="Report Name">
+                    </label>
+                  </section>
+                </div>
+                <br>
+                <div class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="reportRoles">Report Type</label>
+                  </section>
+                  <section class="col col-4">
+                    <select select2 multiple id="reportUserRoleMultiple" style="width:100%" class="select2 form-control" placeholder="priority">
+                      <option *ngFor="let options of reportUserRolesOptions" [value]="options.value">{{options.name}}</option>
+                    </select>
+                  </section>
+                </div>
+              </fieldset>
+              <span *ngIf="reportContentStatus" class="icon-color-bad"> Report content can't be empty</span>
+              <footer>
+                <button *ngIf="report" class="btn btn-success" type="submit" [disabled]=" report.name==0 || reportRolesSelections.length==0"
+                  (click)="updateReport(report.name,reportRolesSelections)">Update</button>
+                <button class="btn btn-warning" (click)="goBack()" type="button">Cancel</button>
+              </footer>
+            </form>
+
+          </div>
+        </sa-widget>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>

@@ -1,0 +1,162 @@
+<div class="contentMapWell" id="content">
+
+  <div class="text-center text-danger" *ngIf="loadDeatailsError">{{loadDeatailsError}}</div>
+
+  <div *ngIf="loadDetails.length ===0" class="padding-5 username" style="text-align:center">
+    <strong> No loads are assigned to you</strong>
+  </div>
+  <div class="mapContainer">
+    <div id="map-canvas" class="map"></div>
+    <img *ngIf="DriverdrirectionEnabled" class="mapWeatherIcon" width="30px" src="./assets/img/weather.jpg" (click)="weatherReport()">
+    <div *ngIf="enableCompleteLoadButton" class="map-cmplt-loadBtn mapCompleteLoad" (click)="setCompleteLoad()">
+      <!--// (click)="setCompleteLoad()"-->
+      <!--<button class="btn btn-primary"><b >Complete Load</b></button>-->
+    </div>
+  </div>
+
+  <div bsModal #weatherDetailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content status">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="weatherDetailsModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <b>Weather Report</b>
+        </div>
+
+        <div class="modal-body loader" *ngIf="weatherLoader" align="center">
+        </div>
+        <div class="modal-body" *ngIf="!weatherLoader && !weatherResponse && DriverLocationErrorDetails" align="center">
+          <div>{{DriverLocationErrorDetails}}</div>
+        </div>
+
+        <div class="modal-body" *ngIf="!weatherLoader && weatherResponse">
+          <!--<div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 weatherTitle" style="color:rgb(244,128,36)">
+              <b>{{weatherResponse?.name }} ( {{weatherResponse?.id}})</b>
+            </div>
+          </div>-->
+          <div class="row" style="margin-top:2%">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 weather-img" align="center">
+              <img src="http://forecast.weather.gov/newimages/medium/{{weatherResponse?.weatherimage}}" alt="Cinque Terre" width="80" height="80">
+              <div>
+                <b>{{weatherResponse?.weather}}</b>
+              </div>
+              <div>{{weatherResponse?.temp}} &deg;F &nbsp; &nbsp; {{weatherResponse?.tempC}} &deg;C</div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" align="left">
+              <div class="weather-info">
+                <div class="row list">
+                  <div class="col-xs-5 col-sm-6 col-md-6 col-lg-6  no-padding">
+                    <div class="weather-parameters" align="right">
+                      <b>Humidity</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-7 col-sm-6 col-md-6 col-lg-6">
+                    <div class="weather-parameters">
+
+                      <span>{{weatherResponse?.relh}} % </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row list">
+                  <div class="col-xs-5 col-sm-6 col-md-6 col-lg-6  no-padding">
+                    <div class="weather-parameters" align="right">
+                      <b>Wind Speed</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-7 col-sm-6 col-md-6 col-lg-6">
+                    <div class="weather-parameters">
+
+                      <span>{{weatherResponse?.wind_speed}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row list">
+                  <div class="col-xs-5 col-sm-6 col-md-6 col-lg-6  no-padding">
+                    <div class="weather-parameters" align="right">
+                      <b>Barometer</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-7 col-sm-6 col-md-6 col-lg-6">
+                    <div class="weather-parameters">
+
+                      <span>{{weatherResponse?.barometer}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row list">
+                  <div class="col-xs-5 col-sm-6 col-md-6 col-lg-6  no-padding">
+                    <div class="weather-parameters" align="right">
+                      <b>Dew Point</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-7 col-sm-6 col-md-6 col-lg-6">
+                    <div class="weather-parameters">
+
+                      <span>{{weatherResponse?.dewp}}
+                        <label>&deg;F</label>
+                        <label>({{weatherResponse?.dewPOintInDeg}}</label>
+                        <label>&deg;C)</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row list">
+                  <div class="col-xs-5 col-sm-6 col-md-6 col-lg-6  no-padding">
+                    <div class="weather-parameters" align="right">
+                      <b>Visibility</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-7 col-sm-6 col-md-6 col-lg-6">
+                    <div class="weather-parameters">
+
+                      <span>{{weatherResponse?.visibility}} mi</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row list">
+                  <div class="col-xs-5 col-sm-6 col-md-6 col-lg-6  no-padding">
+                    <div class="weather-parameters" align="right">
+                      <b>Last Updated</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-7 col-sm-6 col-md-6 col-lg-6">
+                    <div class="weather-parameters">
+                      <span>{{weatherResponse?.date}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="weatherDetailsModal.hide()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--complete load popup-->
+<div bsModal #showLoadCompleteAlert="bs-modal" data-backdrop="static" class="modal fade" tabindex="-1" [config]="{'backdrop':'static', 'keyboard': false}"
+  role="dialog" aria-labelledby="myLargeModalLabel" style="top:35%">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center">
+          <strong>Load complete</strong>
+        </h4>
+      </div>
+      <div class="modal-body ">
+        Please click on 'Ok' to complete the load
+      </div>
+      <div class="modal-footer padding-10 text-center">
+        <button class="btn btn-primary" type="button" (click)="setCompleteLoad()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

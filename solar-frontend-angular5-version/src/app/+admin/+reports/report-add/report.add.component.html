@@ -1,0 +1,65 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- MAIN CONTENT -->
+        <div sa-widget [editbutton]="false" [deletebutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Add Report </h2>
+          </header>
+          <div class="widget-body">
+            <section *ngIf="reportError" class="icon-color-bad"> {{reportError}} </section>
+            <form class="smart-form">
+              <fieldset>
+                <div class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="reportRoles">Report Template Name</label>
+                  </section>
+                  <section class="col col-4">
+                    <select id="reportTemplateNames" style="width:100%" class="select2 form-control" placeholder="priority">
+                      <option *ngFor="let options of reportTemplateNames" [value]="options.value">{{options.name}}</option>
+                     </select>
+                  </section>
+                </div>
+                <br>
+                <div class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="reportRoles">Report Template Type</label>
+                  </section>
+                  <section class="col col-4">
+                    <select id="reportFormats" style="width:100%" class="select2 form-control" placeholder="priority">
+                      <option *ngFor="let options of reportFormats" [value]="options.name">{{options.name}}</option>
+                    </select>
+                  </section>
+                </div>
+                <br>
+
+                <div class="row">
+                  <section class="col col-3" style="margin-bottom: 0px;margin-top: 5px;">
+                    <label class="label" for="reportRoles">Report Template</label>
+                  </section>
+                  <section class="col col-4">
+                    <label class="input form-control">
+                      <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".xml" name="files" readonly>
+                    </label>
+                  </section>
+                </div>
+
+              </fieldset>
+              <!--<span *ngIf="reporttContentStatus" class="icon-color-bad"> Report content can't be empty</span>-->
+              <footer>
+                <button class="btn btn-success" type="submit" [disabled]="reportTemplateNamesSelections.length==0 || reportFormatSelections.length==0 || !fileAppend"
+                  (click)="addTemplateReport(reportTemplateNamesSelections,reportFormatSelections)">Add</button>
+                <button class="btn btn-warning" (click)="goBack()" type="button">Cancel</button>
+              </footer>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>

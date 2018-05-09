@@ -1,0 +1,44 @@
+<span id="activity" class="activity-dropdown" (click)="onToggle()">
+  <i class="fa fa-user"></i>
+  <b class="badge bg-color-red">{{count}}</b>
+</span>
+
+<div class="ajax-dropdown" #dropdown>
+  <div class="btn-group btn-group-justified" data-toggle="buttons">
+    <label [ngClass]="{'btn btn-default': true, active: activity.data==currentActivityHeader }" *ngFor="let activity of activitiesHeaders"
+      (click)="setActivity(activity.data)">
+      <input type="radio" name="activity" /> {{activity.data}}
+      <span *ngIf="activity.data !='calendar'">({{activity.count}})</span>
+    </label>
+  </div>
+  <!-- notification content -->
+  <div class="ajax-notifications custom-scroll">
+    <!-- <ul *ngIf="noNotifications" class="notification-body">
+    
+    </ul> -->
+    <ul class="notification-body">
+      <li *ngIf="!currentActivity && currentActivityHeader=='notifications'" class="padding-5">There are no notification events for user</li>
+      <ng-template ngFor let-item *ngIf="currentActivityHeader=='notifications'" [ngForOf]="currentActivity">
+        <li activitiesMessage [item]="item" (click)="changeReadStatus(item)"></li>
+      </ng-template>
+      <li *ngIf="eventListData.length==0 && currentActivityHeader=='calendar'" class="padding-5">There are no calendar events for user</li>
+      <ng-template ngFor let-events *ngIf="currentActivityHeader==='calendar'" [ngForOf]="eventListData">
+        <li (click)="onEventNavigation(events.start)" calendarActivitiesMessages [events]="events"></li>
+      </ng-template>
+    </ul>
+  </div>
+  <!-- end notification content -->
+  <span>
+    <a *ngIf="!noNotifications" (click)="notificationsList()">
+      <i class="fa fa-list"></i> All Notifications </a>
+
+    <!--<a   (click)="calendarEventsList()"><i class="fa fa-calendar"></i>  All Calendar Events</a>-->
+    <button type="button" (click)="update()" class="btn btn-xs btn-default pull-right">
+      <i class="fa fa-cog" *ngIf="!loading"></i>
+      <i class="fa fa-cog fa-spin" *ngIf="loading"></i>
+      <span *ngIf="loading">loading...</span>
+    </button>
+  </span>
+  <!-- end footer -->
+
+</div>

@@ -1,0 +1,200 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData"  id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Add Load</h2>
+          </header>
+          <div class="widget-body  ">
+
+            <section *ngIf="loadAddSuccess" class="text-success text-center"> {{loadAddSuccess}} </section>
+            <section *ngIf="loadAddFailure" class="icon-color-bad text-center"> {{loadAddFailure}} </section>
+            <br>
+            <fieldset>
+              <form class="form truckAddForm" [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)" name="truckAddForm"
+                id="truckAddForm" action="javascript:void(0)" method="post">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="loadNum">
+                        Load Number
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <input class="form-control" type="text" id="loadNum" name="loadNum" placeholder="Load number" [(ngModel)]="load.loadNum"
+                          [formControl]=" this.loadNum">
+                        <span *ngIf=" this.loadNum.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please enter load number </span>
+                        <span *ngIf="this.loadNum.hasError('maxlength') ||this.loadNum.hasError('pattern') " class="icon-color-bad">Please enter valid load number with 10 digits only</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-control highLoad">
+                      <input id="load_high_value" type="checkbox" class="i-checks" [(ngModel)]="load.highValueLoad" [ngModelOptions]="{standalone: true}"
+                        name='highValueLoad' (ngModelChange)="load.highValueLoad=$event?'1':'0'"> High Value
+                    </label>
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="vendorNum" [ngClass]="{'has-error':! this.vendorNum.valid &&  this.vendorNum}">
+                        Vendor
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <select class="form-control" id="vendorNum" name="vendorNum" (change)="getDriversByVendorNum(load.vendorNum)" [formControl]="this.vendorNum"
+                          [(ngModel)]="load.vendorNum">
+                          <option value='' disabled>Select vendor</option>
+                          <option *ngFor="let vendor of vendorsList" [value]="vendor.vendorNbr">{{vendor.vendorName}}</option>
+                        </select>
+                        <span *ngIf="this.vendorNum.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please select vendor name</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-control highPriority">
+                      <input id="load_high_priority" type="checkbox" class="i-checks" [(ngModel)]="load.highPriorityLoad" [ngModelOptions]="{standalone: true}"
+                        name='highPriorityLoad' (ngModelChange)="load.highPriorityLoad=$event?'1':'0'"> High Priority
+                    </label>
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="driverId" [ngClass]="{'has-error':! this.driverId.valid &&  this.driverId}">
+                        Driver
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <select class="form-control" id="driverId" name="driverId" [formControl]="this.driverId" [(ngModel)]="load.driverId">
+                          <option value='' disabled>Select driver</option>
+                          <option *ngFor="let driver of driverNameListData" [value]="driver.id">{{driver.firstName}}</option>
+                        </select>
+                        <span *ngIf="this.driverId.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please select driver name</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="originNum" [ngClass]="{'has-error':! this.originNum.valid &&  this.originNum}">
+                        Pickup Location
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <select class="form-control" id="originNum" name="originNum" [formControl]="this.originNum" [(ngModel)]="load.originNum">
+                          <option value='' disabled>Select pickup location</option>
+                          <option *ngFor="let location of locationList" [value]="location.locNbr">{{location.locAddrName}}</option>
+                        </select>
+                        <span *ngIf="this.originNum.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please select pickup location</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="destinNum" [ngClass]="{'has-error':! this.destinNum.valid &&  this.destinNum}">
+                        Destination Location
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <select class="form-control" id="destinNum" name="destinNum" [formControl]="this.destinNum" [(ngModel)]="load.destinNum">
+                          <option value='' disabled>Select destination location</option>
+                          <option *ngFor="let location of locationList" [value]="location.locNbr">{{location.locAddrName}}</option>
+                        </select>
+                        <span *ngIf="this.destinNum.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please select destination location</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="appointmentye" [ngClass]="{'has-error':! this.appointmentye.valid &&  this.appointmentye}">
+                        Appointment Type
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <select class="form-control" id="appointmentye" name="appointmentye" [formControl]="this.appointmentye" [(ngModel)]="load.appointmentye">
+                          <option value='' disabled>Select appointment type</option>
+                          <option *ngFor="let appointment of appointmentTypesList" [value]="appointment.id">{{appointment.type}}</option>
+                        </select>
+                        <span *ngIf="this.appointmentye.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please select appointment type</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="geomile" [ngClass]="{'has-error':! this.geomile.valid &&  this.geomile}">
+                        Geofence Miles
+                        <font class="icon-color-bad">*</font>
+                      </label>
+                      <div class="controls col-sm-6">
+                        <input placeholder="Geofence Miles" class="form-control" type="number" id="geomile" name="geomile" [(ngModel)]="geomiles"
+                          [formControl]=" this.geomile">
+                        <span *ngIf=" this.geomile.hasError('pattern')" class="icon-color-bad">Please enter valid number between 5 to 150 only</span>
+                        <span *ngIf=" this.geomile.hasError('required')  &&  this.formValidate" class="icon-color-bad ">Please enter geofence miles </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label class="col-sm-4 control-label" for="cartons" [ngClass]="{'has-error':! this.cartons.valid &&  this.cartons}">
+                        No.of cartons
+                      </label>
+                      <div class="controls col-sm-6">
+                        <input class="form-control" type="number" id="cartons" name="cartons" placeholder="No.of cartons" [(ngModel)]="load.cartons"
+                          [formControl]=" this.cartons">
+                        <span *ngIf=" this.cartons.hasError('pattern')" class="icon-color-bad">Please enter valid number between 1 and 150 only</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+                <div class="smart-form">
+                  <footer>
+                    <div class="row">
+                      <div class="control-group col-sm-6 col-sm-offset-6">
+                        <button (click)="goBack()" class="btn btn-success">Cancel</button>
+                        <button type="submit" id="vin_submit" class="btn btn-warning"> ADD
+                        </button>
+
+                      </div>
+                    </div>
+                  </footer>
+                </div>
+              </form>
+            </fieldset>
+
+          </div>
+        </sa-widget>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>

@@ -1,0 +1,46 @@
+        <div id="content">
+            <sa-widgets-grid>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <sa-widget [editbutton]="false" color="blueDark">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                <h2>Cars Details </h2>
+                                <div class="widget-toolbar" role="menu">
+                                    <a class="btn btn-primary" routerLink="/cars/addCar"> Add Car</a>
+                                </div>
+                            </header>
+                            <div>
+
+                                <div class="widget-body no-padding ">
+                                    <section *ngIf="carDeleteSuccess" style="color:#468847;text-align: center;"> {{carDeleteSuccess}} </section>
+                                    <section *ngIf="carDeleteFailure" style="color:red;text-align: center;"> {{carDeleteFailure}} </section>
+
+                                    <sa-datatable [options]="options" tableClass="table table-striped table-bordered table-hover" paginationLength="true" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Vin Number</th>
+                                                <th>Car Description</th>
+                                                <th>Load Number</th>
+                                                <th>Edit/Delete </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                            <tr>
+                                                <th>Vin Number</th>
+                                                <th>Car Description</th>
+                                                <th>Load Number</th>
+                                                <th>Edit/Delete </th>
+                                            </tr>
+                                        </tfoot>
+                                    </sa-datatable>
+                                </div>
+                            </div>
+                        </sa-widget>
+
+                    </div>
+                </div>
+
+            </sa-widgets-grid>
+        </div>

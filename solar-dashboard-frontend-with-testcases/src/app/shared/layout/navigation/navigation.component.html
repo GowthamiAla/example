@@ -1,0 +1,182 @@
+<aside id="left-panel">
+
+  <!-- User info -->
+  <sa-login-info></sa-login-info>
+  <!-- end user info -->
+
+  <nav>
+    <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+    Please note that these links work a bit different than
+    traditional href="" links. See documentation for details.
+    -->
+
+    <ul saSmartMenu>
+      <!--<li>
+        <a title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span
+          class="menu-item-parent">{{'Dashboard' | i18n}}</span></a>
+        <ul>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/analytics">{{'Analytics Dashboard' | i18n}}</a>
+          </li>
+        </ul>
+      </li>-->
+
+
+      <!--<div *ngIf="userRole!='DCMANAGER'">-->
+
+        <li *ngIf="userRole!='DCMANAGER'">
+          <a routerLink="/dashboard/driverLocation" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span
+          class="menu-item-parent">{{'Dashboard' | i18n}}</span></a>
+          <ul>
+            <li routerLinkActive="active">
+              <a routerLink="/dashboard/driverLocation">{{'Driver Location' | i18n}}</a>
+            </li>
+
+            <li routerLinkActive="active">
+              <a routerLink="/dashboard/liveTracking">{{'LiveTracking' | i18n}}</a>
+            </li>
+
+            <li routerLinkActive="active">
+              <a routerLink="/dashboard/analytics">{{'Analytics' | i18n}}</a>
+            </li>
+
+            <li routerLinkActive="active">
+              <a routerLink="/dashboard/dcLoadAnalysis1">{{'Performance Analysis' | i18n}}</a>
+            </li>
+
+            <li routerLinkActive="active">
+              <a routerLink="/dashboard/dcLoadAnalysis2">{{'Vendor vs Load Analysis' | i18n}}</a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li routerLinkActive="active" *ngIf="userRole=='ADMIN' && userRole!='DCMANAGER'">
+          <a routerLink="/admin/users" title="Admin"><i class="fa fa-lg fa-fw fa-user"></i> <span
+          class="menu-item-parent">{{'Admin'| i18n }}</span></a>
+          <ul>
+            <!--<li routerLinkActive="active">
+              <a (click)="onToggle()" routerLink="/admin/loggers">{{'Loggers' | i18n}}</a>
+            </li>-->
+
+            <li routerLinkActive="active">
+              <a (click)="onToggle()" routerLink="/admin/users">{{'Users' | i18n}}</a>
+            </li>
+
+            <li routerLinkActive="active">
+              <a (click)="onToggle()" routerLink="/admin/notificationstree">{{'Notification Channels' | i18n}}</a>
+            </li>
+
+            <li routerLinkActive="active">
+              <a (click)="onToggle()" routerLink="/admin/template">{{'Template'| i18n }}</a>
+            </li>
+
+            
+
+          <!--<li routerLinkActive="active">
+            <a (click)="onToggle()" routerLink="/admin/widget">{{'Widgets' | i18n}}</a>
+          </li>
+
+          <li routerLinkActive="active">
+            <a (click)="onToggle()" routerLink="/admin/report">{{'Reports' | i18n}}</a>
+          </li>-->
+
+         
+
+        </ul>
+      </li>
+
+
+      <!--<li routerLinkActive="active">
+        <a routerLink="/users/datatables" title="User"><i class="fa fa-lg fa-fw fa-list-alt"></i><span
+          class="menu-item-parent">{{'Users' | i18n}}</span></a>
+      </li>-->
+
+
+      <li routerLinkActive="active" *ngIf="userRole!='DCMANAGER'">
+        <a  routerLink="/calendar">
+          <i class="fa fa-lg fa-fw fa-calendar"></i>
+          <span class="menu-item-parent">{{'Calendar' | i18n}}</span></a>
+      </li>
+
+      <li routerLinkActive="active" *ngIf="userRole!='DCMANAGER'">
+        <a  routerLink="/drivers">
+          <i class="fa fa-lg fa-fw fa-user"></i>
+          <span class="menu-item-parent">{{'Drivers' | i18n}}</span></a>
+      </li>
+
+        <li routerLinkActive="active" *ngIf="userRole!='DCMANAGER'">
+          <a  routerLink="/locations">
+            <i class="fa fa-lg fa-fw fa-map-marker"></i>
+            <span class="menu-item-parent">{{'Locations' | i18n}}</span></a>
+        </li>
+
+
+<!--      <li>
+        <a routerLink="/documents">
+          <i class="fa fa-lg fa-fw fa-file-pdf-o"></i>
+          <span class="menu-item-parent">{{'Documents' | i18n}}</span></a>
+      </li>-->
+
+
+      <!--<li>
+        <a routerLink="/trucks">
+          <i class="fa fa-lg fa-fw fa-automobile"></i>
+          <span class="menu-item-parent">{{'Trucks' | i18n}}</span></a>
+      </li>-->
+
+      <li routerLinkActive="active" *ngIf="userRole!='DCMANAGER'">
+        <a  routerLink="/loads">
+          <i class="fa fa-lg fa-fw fa-truck"></i>
+          <span class="menu-item-parent">{{'Loads' | i18n}}</span></a>
+      </li>
+
+      <li routerLinkActive="active" *ngIf="userRole!='DCMANAGER'">
+        <a  routerLink="/vendors">
+          <i class="fa fa-lg fa-fw fa-group"></i>
+          <span class="menu-item-parent">{{'Vendors' | i18n}}</span></a>
+      </li>
+
+
+<!--       <li>
+        <a routerLink="/expenses">
+          <i class="fa fa-lg fa-fw fa-money"></i>
+          <span class="menu-item-parent">{{'Expenses' | i18n}}</span></a>
+      </li>
+
+       <li>
+        <a routerLink="/food">
+          <i class="fa fa-lg fa-fw fa-spoon"></i>
+          <span class="menu-item-parent">{{'Food Courts' | i18n}}</span></a>
+      </li>
+
+       <li>
+        <a routerLink="/fuel">
+          <i class="fa fa-lg fa-fw fa-beer"></i>
+          <span class="menu-item-parent">{{'Fuel Stations' | i18n}}</span></a>
+      </li>
+
+       <li>
+        <a routerLink="/contactdriver">
+          <i class="fa fa-lg fa-fw  fa-comment"></i>
+          <span class="menu-item-parent">{{'Contact Driver' | i18n}}</span></a>
+      </li>-->
+
+       <!--</div>-->
+    
+
+	        <li routerLinkActive="active" *ngIf="userRole=='DCMANAGER'">
+          <a  routerLink="/dcmanagerloads">
+            <i class="fa fa-lg fa-fw fa-truck"></i>
+            <span class="menu-item-parent">{{'Loads' | i18n}}</span></a>
+        </li>
+	
+
+
+    </ul>
+    <!--<aside-chat></aside-chat>-->
+  </nav>
+
+  <sa-minify-menu></sa-minify-menu>
+
+</aside>

@@ -1,0 +1,204 @@
+  <div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+
+        <!-- MAIN CONTENT -->
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>Add Car</h2>
+          </header>
+          <div class="widget-body  ">
+
+            <section *ngIf="carAddSuccess" style="color:#468847;text-align: center;"> {{carAddSuccess}} </section>
+            <section *ngIf="carAddFailure" style="color:red;text-align: center;"> {{carAddFailure}} </section>
+            <br>
+            <fieldset>
+             <form class="form" [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" [ngClass]="{'has-error':! this.loadNum.valid &&  this.formValidate}">
+														Load Number <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <ng-select [options]="loadArrayList" [multiple]="false" placeholder="Select one" [allowClear]="false" [placeholder]="'Select Load Number'"
+                              [(ngModel)]="car.loadNum" name="loadNum" [formControl]=" this.loadNum" (selected)="getLoadDealers($event.value)">
+                            </ng-select>
+                            <span *ngIf=" this.loadNum.hasError('required') &&  this.formValidate" class="text-danger">Please Select Loadnum</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="dealerCd">
+														Dealer Name <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <select class="form-control select2" name="dealerCd" class="form-control" [formControl]="this.dealerCd" id="dealerCd" [(ngModel)]="car.dealerCd"
+                              (change)="onDealersSelected($event.target.value)">
+                              <option value=''>Select Dealer Name</option>
+                              <option *ngFor="let car of dealersList " value={{car.dealerCd}}_{{car.shipId}}_{{car.affil}}>
+                                {{car.dealerName}}
+                              </option>
+                              </select>
+                            <span *ngIf=" this.dealerCd.hasError('required') &&  this.formValidate" class="text-danger">Please Select Dealer Name</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row" style="display:none">
+                      <div class="col-sm-6">
+                        <div class="row" style="display:none;">
+                          <label class="col-sm-4 control-label" for="affil">
+														Affil <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="text" id="affil" name="affil" size="30" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row" style="display:none;">
+                          <label class="col-sm-4 control-label" for="shipId">
+														ShipId <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="text" id="shipId" name="shipId" size="30" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label form-group" for="vin" [ngClass]="{'has-error':! this.vin.valid &&  this.vin}">
+														VIN No <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" minlength="17" maxlength="17" type="text" id="vin" name="vin" size="30" [(ngModel)]="car.vin"
+                              [formControl]=" this.vin">
+                            <span *ngIf=" this.vin.hasError('required') &&  this.formValidate" class="text-danger ">Please enter vin number</span>
+                            <span *ngIf=" this.vin.hasError('minlength')&& !this.vin.hasError('pattern')" class="text-danger">Please Enter minimum 17 alphanumeric characters</span>
+                            <span *ngIf=" this.vin.hasError('pattern') && this.vin.hasError('minlength')" class="text-danger">Please Enter only alphanumeric characters</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="dealerAddress">
+														Dealer Address </label>
+                          <div class="controls col-sm-6">
+                            <input type="text" id="dealerAddress" class="form-control" name="dealerAddress" size="30" [(ngModel)]="car.dealerAddress"
+                              [ngModelOptions]="{standalone: true}" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="loadSeq" [ngClass]="{'has-error':! this.loadSeq.valid &&  this.loadSeq}">
+														Load Sequence <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="number" [formControl]="this.loadSeq" [(ngModel)]="car.loadSeq" id="loadSeq" name="loadSeq"
+                              size="30" min="1" (change)="onloadseqsubmit($event.target.value)">
+                            <span *ngIf="this.loadSeq.hasError('required') &&  this.formValidate" class="text-danger ">Please enter numbers only</span>
+                            <div class="text-danger">{{message}}</div>
+                            <span *ngIf="dealersListLength<car.loadSeq" class="text-danger">Please enter a value less than or equal to {{dealersListLength}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label form-group" for="yardId" [ngClass]="{'has-error':! this.yardId.valid &&  this.yardId}">
+														YardId <font class="text-danger">*</font>
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" minlength="5" maxlength="5" type="text" id="yardId" name="yardId" size="30" [(ngModel)]="car.yardId"
+                              [formControl]=" this.yardId">
+                            <span *ngIf=" this.yardId.hasError('required') &&  this.formValidate" class="text-danger ">Please enter Yard ID</span>
+                            <span *ngIf=" this.yardId.hasError('minlength')&& !this.yardId.hasError('pattern')" class="text-danger">Please Enter minimum 5 alphanumeric characters</span>
+                            <span *ngIf=" this.yardId.hasError('pattern') && this.yardId.hasError('minlength')" class="text-danger">Please Enter alphanumeric characters only</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="lotLocation" [ngClass]="{'has-error':! this.lotLocation.valid &&  this.lotLocation}">
+														Lot Location
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="text" id="lotLocation" maxlength="7" name="lotLocation" size="30" [(ngModel)]="car.lotLocation"
+                              [formControl]=" this.lotLocation">
+                            <span *ngIf=" this.lotLocation.hasError('pattern')" class="text-danger">Please Enter characters only</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="colorDesc" [ngClass]="{'has-error':! this.colorDesc.valid &&  this.colorDesc}">
+														Color
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="text" id="colorDesc" maxlength="20" name="colorDesc" size="30" [(ngModel)]="car.colorDesc"
+                              [formControl]=" this.colorDesc">
+                            <span *ngIf="this.colorDesc.hasError('pattern')" class="text-danger ">Please Enter characters only</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="parkingSpot" [ngClass]="{'has-error':! this.parkingSpot.valid &&  this.parkingSpot}">
+														Lot-Bay
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="text" id="parkingSpot" maxlength="20" name="parkingSpot" [(ngModel)]="car.parkingSpot"
+                              size="30" [formControl]=" this.parkingSpot">
+                            <span *ngIf="this.parkingSpot.hasError('pattern')" class="text-danger ">Please Enter alphanumeric characters only</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <label class="col-sm-4 control-label" for="vinDesc" [ngClass]="{'has-error':! this.vinDesc.valid &&  this.vinDesc}">
+														Vin Description
+													</label>
+                          <div class="controls col-sm-6">
+                            <input class="form-control" type="text" id="vinDesc" maxlength="30" name="vinDesc" [(ngModel)]="car.vinDesc" size="30" [formControl]=" this.vinDesc">
+                            <span *ngIf="this.vinDesc.hasError('pattern')" class="text-danger ">Please Enter characters only</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                      <div class="control-group col-sm-6 col-sm-offset-6">
+                        <button type="submit" id="vin_submit" class="btn btn-success">
+													<i class="fa fa-save"></i> Save
+												</button>
+                        <a (click)="goBack()" class="btn btn-warning">Cancel</a>
+                      </div>
+                    </div>
+
+                  </form>
+            </fieldset>
+
+          </div>
+        </sa-widget>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>

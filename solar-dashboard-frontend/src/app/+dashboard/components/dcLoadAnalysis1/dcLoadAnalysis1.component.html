@@ -1,0 +1,170 @@
+<app-error500 [errorname]="serviceErrorResponse" *ngIf="serviceErrorData"></app-error500>
+<div [hidden]="serviceErrorData" id="content">
+	<sa-widgets-grid color="blueDark">
+		<div class="row">
+			<div class="col-sm-12">
+				<!--<div class="well well-light">-->
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="panel panel-success pricing-big">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									Loads</h3>
+							</div>
+							<div class="panel-body no-padding text-align-center">
+								<div class="the-price">
+									<h1>
+										1,82,865</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="panel panel-teal pricing-big">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									Cartons</h3>
+							</div>
+							<div class="panel-body no-padding text-align-center">
+								<div class="the-price">
+									<h1>
+										8,14,68,954</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="panel panel-primary pricing-big">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									Trailer Performance</h3>
+							</div>
+							<div class="panel-body no-padding text-align-center">
+								<div class="the-price">
+									<h1>
+										98%</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="panel panel-blueLight pricing-big">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									Vendors</h3>
+							</div>
+							<div class="panel-body no-padding text-align-center">
+								<div class="the-price">
+									<h1>
+										255</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- </div>-->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<sa-widget [editbutton]="false" color="blueDark">
+					<header>
+						<span class="widget-icon">
+							<i class="fa fa-bar-chart-o"></i>
+						</span>
+						<h2>DC vs LoadsCount</h2>
+
+						<div class="widget-toolbar" role="menu" (click)="openReportsDropDown()" dropdown [ngClass]="DropDownTooglePopup">
+							<a class="btn btn-success btn-xs" title="Reports" dropdownToggle style="color:#fff;">Reports</a>
+							<div class="FilterDropDownAnimation dropdown-menu dropdown-menu-large filterDropwdownViewAlign " role="menu" (click)="$event.stopPropagation()">
+								<div id="checkout-form" class="smart-form">
+									<header style="padding:2px">Reports</header>
+									<fieldset>
+										<span *ngIf="errorMessage" class="icon-color-bad">{{errorMessage}}</span>
+										<div class="row form-group">
+											<section class="col col-xs-4 filterFormAlign">
+												<label class="label">Start Date</label>
+											</section>
+											<section class="col col-xs-8">
+												<label class="form-control" style="border:0px">
+													<my-date-picker [options]="myDatePickerOptions" [selDate]="startDate" [(ngModel)]="QueryData.startDate" name="startDate"></my-date-picker>
+												</label>
+											</section>
+										</div>
+
+										<div class="row form-group">
+											<section class="col col-xs-4 filterFormAlign">
+												<label class="label">End Date</label>
+											</section>
+											<section class="col col-xs-8">
+												<label class="form-control" style="border:0px">
+													<my-date-picker [options]="myDatePickerOptions" [selDate]="endDate" [(ngModel)]="QueryData.endDate" name="endDate"></my-date-picker>
+												</label>
+											</section>
+										</div>
+
+									</fieldset>
+
+									<fieldset style="padding:5px">
+										<div style="float:right;">
+											<button class="btn  btn-warning btn-sm" type="submit" (click)="onReportsEventCancel()">Cancel</button>
+											<button class="btn  btn-success btn-sm" type="submit" (click)="onReportsEventSubmit()">Submit</button>
+										</div>
+									</fieldset>
+								</div>
+							</div>
+						</div>
+
+					</header>
+					<div>
+						<div class="widget-body">
+							<div id="on-time-delivery-stats-chart" class="dc-chart" style="width:100%">
+								<a class="reset" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</sa-widget>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<sa-widget [editbutton]="false" color="blueDark">
+					<header>
+						<span class="widget-icon">
+							<i class="fa fa-bar-chart-o"></i>
+						</span>
+						<h2>Priority Load Analytics</h2>
+					</header>
+					<div>
+						<div class="widget-body">
+							<div id="priority-chart" class="dc-chart">
+								<a class="reset" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</sa-widget>
+			</div>
+			<div class="col-sm-6">
+				<sa-widget [editbutton]="false" color="blueDark">
+					<header>
+						<span class="widget-icon">
+							<i class="fa fa-bar-chart-o"></i>
+						</span>
+						<h2>Early Loads vs Late Loads</h2>
+					</header>
+					<div>
+						<div class="widget-body">
+							<div id="early-vs-late-loads-chart" class="dc-chart">
+								<a class="reset" style="display: none;">reset</a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</sa-widget>
+			</div>
+		</div>
+	</sa-widgets-grid>
+</div>

@@ -1,0 +1,57 @@
+<div class="content-top clearfix">
+	<h1 class="al-title">{{ activePageTitle }}</h1>
+
+	<ul class="breadcrumb al-breadcrumb">
+		<li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+		<li class="breadcrumb-item active">{{ activePageTitle }}</li>
+	</ul>
+</div>
+<div id="wrapper">
+	<div id="page-wrapper" class="gray-bg">
+        <div id = "liveTracking-page" class="page"> 
+       		<div class="wrapper wrapper-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                    	<div class="animated fadeIn card ">
+                        	<div class="card-header col-xs-4">
+                            	<h5>Live Tracking - Driver Current Locations</h5>
+                            </div>
+							<div class="col-xs-2 pull-right">
+                                    <div class="ibox-tools">
+                                        <span class="label normalLoadLabel">Normal Load</span>
+                                    </div>
+                                    <div class="ibox-tools">
+                                        <div class = "normalLoad"></div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xs-2 pull-right">
+                                	<div class="ibox-tools">
+										<span class="label highValueLoadLabel">High Value Load</span>
+									</div>
+									<div class="ibox-tools" style = "">
+										<div class = "highValueLoad"></div>
+									</div>
+								</div>
+								<div class="col-xs-2 pull-right">
+                                	<div class="ibox-tools">
+										<span class="label highPriorityLoadLabel">High Priority Load</span>
+									</div>
+									<div class="ibox-tools" style = "">
+									 	<div class = "highPriorityLoad"></div>
+									</div>
+								</div>
+                            <div class="card-body">
+		                        <div class="row">
+								    <div class="map" id = "map" width = "100%" height = "400px">								        
+								    </div>
+								</div>
+		                    </div>
+                        </div>
+                    </div>
+                </div>  
+			</div>
+		</div>	
+	</div>
+</div>
+
+

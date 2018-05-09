@@ -1,0 +1,86 @@
+<header id="header" class="animated fadeInDown">
+
+   <p class="logoBox">
+    <img alt="Solar" class="logoImage" src="assets/img/solar.png"><span class="logoName">Solar</span>
+  </p>
+
+
+
+</header>
+
+<div id="main" role="main" class="animated fadeInDown">
+
+  <div id="content" class="container">
+
+    <div class="row">
+
+      <div class="col-md-6 col-md-offset-2 ">
+        <div class="well no-padding">
+          <form [formGroup]="complexForm" method="post" *ngIf="userRegisterModel" id="login-form" class="smart-form client-form">
+            <header>
+              Forgot Password
+            </header>
+
+            <fieldset>
+
+              <section *ngIf="errorMessage" style="color: red;"> {{errorMessage}} </section>
+
+              <section>
+                <label class="label" for="email" [ngClass]="{'has-error':! this.email.valid &&  this.email}">Email</label>
+
+                <div class="form-group form-control  input">
+                  <label class="input"> <i class="icon-append fa fa-user"></i>
+                <input  type="text" name="email"  [formControl]="this.email" [(ngModel)]="userRegisterModel.email" placeholder="Email" />
+
+                <span *ngIf=" this.email.hasError('required') &&submitted  " class=" text-danger ">Please Enter email</span>
+
+                 <span *ngIf=" this.email.hasError('pattern') " class=" text-danger ">Please Enter valid email</span>
+
+                </label>
+                </div>
+              </section>
+
+              <section>
+                <label class="label" for="phone" [ngClass]="{'has-error':! this.phone.valid &&  this.phone}">Your Phone Number</label>
+
+                <div class="form-group form-control  input">
+                  <label class="input"> <i class="icon-append fa fa-lock"></i>
+                <input  type="text" name="phone"  [formControl]="this.phone" [(ngModel)]="userRegisterModel.phone" placeholder="Phone" />
+
+                <span *ngIf=" this.phone.hasError('pattern') " class=" text-danger ">Please Enter 10 Digit Number</span>
+
+                <span *ngIf=" this.phone.hasError('required')  && submitted" class=" text-danger ">Please Enter Phone</span>
+            </label>
+                </div>
+              </section>
+
+
+
+            </fieldset>
+
+
+
+
+            <div class="row show-grid">
+              <div class="col-xs-1 "> </div>
+              <div class="col-xs-11 "> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/register"><u>Create account</u></a>
+              </div>
+              </div>
+            <br>
+
+            <footer>
+              <button type="submit" (click)="submit(userRegisterModel)" [disabled]="!complexForm.valid" class="btn btn-primary">
+                <i class="fa fa-refresh"></i> Confirm with OTP 
+                 <i class="fa fa-cog fa-spin" *ngIf="loading"></i>
+            <span *ngIf="loading">loading...</span>
+            </button>
+            </footer>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

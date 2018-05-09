@@ -1,0 +1,162 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- MAIN CONTENT -->
+        <sa-widget [editbutton]="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>Edit Driver</h2>
+          </header>
+          <div class="widget-body">
+
+            <section *ngIf="driverUpdateSuccess" style="color:#468847;text-align: center;"> {{driverUpdateSuccess}} </section>
+            <section *ngIf="driverUpdateFailure" style="color:red;text-align: center;"> {{driverUpdateFailure}} </section>
+            <br>
+
+            <form *ngIf="driver" [formGroup]="complexForm" class="form" (ngSubmit)="submitForm(complexForm.value)" method="post">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group " for="driver_id"> Driver Id <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="text" class="form-control" maxlength="10" size="30" value='{{driver.empID}}' [(ngModel)]="driver.empID" [ngModelOptions]="{standalone: true}"
+                        readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" for="phonenumber" [ngClass]="{'has-error':! this.phoneNumber.valid &&this.formValidate}"> Phone Number <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="text" class="form-control" minlength="10" maxlength="16" size="30" value="{{driver.phoneNumber}}" [formControl]="this.phoneNumber"
+                        [(ngModel)]="driver.phoneNumber">
+                      <span *ngIf="this.phoneNumber.hasError('required') && this.formValidate" class="text-danger ">Please enter  Phone Number</span>
+                      <span *ngIf="this.phoneNumber.hasError('minlength') && !this.phoneNumber.hasError('pattern') " class="text-danger">Phone Number Should be Min 10 digits</span>
+                      <span *ngIf="this.phoneNumber.hasError('pattern')" class="text-danger">Please enter only digits</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row" *ngIf="driver">
+                <div class="col-sm-6">
+                  <div class="row">
+
+                    <label class="col-sm-4 control-label form-group" for="fname" [ngClass]="{'has-error':! this.firstName.valid &&  this.formValidate}"> First Name <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6">
+                      <input type="text" class="form-control" maxlength="30" size="30" value='' [formControl]="this.firstName" [(ngModel)]="driver.firstName">
+                      <span *ngIf=" this.firstName.hasError('required') &&  this.formValidate" class=" text-danger ">Please Enter First Name</span>
+                      <span *ngIf=" this.firstName.hasError('pattern') " class=" text-danger ">Please enter only alphabets</span>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label">
+                                                        Email <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="email" class="form-control form-group" id="email" name="email" size="30" value='' [(ngModel)]="driver.email"
+                        [ngModelOptions]="{standalone: true}" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" for="middleName"> Middle Name </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="text" class="form-control" id="middleName" name="middleName" maxlength="30" size="30" value='' [formControl]="this.middleName"
+                        [(ngModel)]="driver.middleName">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" for="password" [ngClass]="{'has-error':!this.passWord.valid &&  this.formValidate}"> Password <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="password" class="form-control" maxlength="32" minlength="6" name="password" size="30" [formControl]="this.passWord"
+                        [(ngModel)]="driver.passWord">
+                      <span *ngIf=" this.passWord.hasError('required') &&  this.formValidate" class="text-danger ">Please enter password</span>
+                      <span *ngIf=" this.passWord.hasError('minlength') && this.passWord.hasError('pattern') " class="text-danger">Please enter at least 6 characters</span>
+                      <span *ngIf=" this.passWord.hasError('pattern')&& !this.passWord.hasError('minlength') " class="text-danger">Password between 6 to 32 character Must Contain atleast One Digit,One Lower case letter	One Upper case letter</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" [ngClass]="{'has-error':!this.lastName.valid &&  this.formValidate}" for="lname"> Last Name <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="text" class="form-control" maxlength="30" size="30" [formControl]="this.lastName" [(ngModel)]="driver.lastName"
+                        name="lastName">
+                      <span *ngIf=" this.lastName.hasError('required') &&  this.formValidate" class="text-danger ">Please Enter Last Name</span>
+                      <span *ngIf=" this.lastName.hasError('pattern') " class="text-danger">Please enter only alphabets</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label form-group" [ngClass]="{'has-error':!this.confirmPassword.valid &&  this.formValidate}"
+                      for="confirmPassword"> Confirm Password
+                                                        <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <input type="password" class="form-control" size="30" [formControl]="this.confirmPassword" [(ngModel)]="driver.confirmPassword"
+                        name="confirmPassword" (ngModelChange)="onchange(driver.confirmPassword)">
+                      <span *ngIf="driver.confirmPassword">
+                                                          <span *ngIf="driver.confirmPassword.length!='' " class="text-danger">
+                                                            <span *ngIf="driver.confirmPassword !== driver.passWord" class="text-danger">Should be same as Password</span>
+                      </span>
+                      </span>
+                      <span *ngIf=" this.confirmPassword.hasError('required') &&  this.formValidate" class="text-danger ">Please Enter Confirm Password</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label class="col-sm-4 control-label " for="bDate"> DOB <font class="text-danger">*</font>
+                                                    </label>
+                    <div class="controls col-sm-6" *ngIf="driver">
+                      <my-date-picker name="mydate" [options]="myDatePickerOptions" [selDate]="selectedDate" [(ngModel)]="driver.selectedDate"
+                        [ngModelOptions]="{standalone: true}" (dateChanged)="onDateChanged($event)" required></my-date-picker>
+                      <span *ngIf="this.formValidate && driver.selectedDate.date.year === undefined " class="text-danger ">Please Enter Date Of Birth</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="hr-line-dashed"></div>
+              <div class="row">
+                <div class="control-group col-sm-6 col-sm-offset-4">
+                  <button type="button" id="driver_submit" class="btn  btn-success  " (click)="submitForm()">
+                                                    <i class="fa fa-save"></i> Save
+                                                </button>
+                  <button type="button" class="btn  btn-warning" (click)="goBack()">Cancel</button>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </sa-widget>
+      </div>
+
+    </div>
+  </sa-widgets-grid>
+</div>

@@ -1,0 +1,27 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <div class="col-sm-12">
+        <sa-widget [editbutton]="false">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+            <h2>Health Chart</h2>
+          </header>
+
+          <div class="widget-body">
+            <div class="col-sm-6">
+            <chart [options]="solarChart"></chart>
+            <div style="text-align:center">Solar Health</div>
+            </div>
+            <div class="col-sm-6">
+            <chart [options]="calendarChart"></chart>
+            <div style="text-align:center">Calendar Health</div>
+            </div>
+          </div>
+
+        </sa-widget>
+      </div>
+    </div>
+  </sa-widgets-grid>
+</div>
